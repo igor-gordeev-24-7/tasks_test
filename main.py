@@ -1,5 +1,3 @@
-print("Hello World")
-
 tasks = [
     {
         "id": 1,
