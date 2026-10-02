@@ -1,29 +1,6 @@
-type Task = dict[str, int | str | bool]
-
-tasks = [
-    {
-        "id": 1,
-        "title": "Подготовить презентацию",
-        "completed": False,
-        "priority": "high",
-    },
-    {
-        "id": 2,
-        "title": "Изучить словари",
-        "completed": True,
-        "priority": "medium",
-    },
-    {
-        "id": 3,
-        "title": "Создать репозиторий",
-        "completed": False,
-        "priority": "low",
-    },
-]
-
-# for task in tasks:
-#     print(f"{task['id']} - {task['title']} - {task['completed']} ")
-# print(f"Количество тасков {len(tasks)}")
+from aliases import Task
+from data import tasks
+from helpers import get_new_id
 
 # show_tasks()
 # add_task()
@@ -32,11 +9,6 @@ tasks = [
 # delete_task()
 # show_menu()
 
-# def get_count_price(price: float | int, quantity : int) -> float | int:
-#     return price * quantity
-#
-# get_count_price()
-
 def show_tasks(tasks: list[Task]) -> None:
     if len(tasks) == 0:
         print(f"Список задач пуст")
@@ -44,16 +16,6 @@ def show_tasks(tasks: list[Task]) -> None:
     print(f"Список задач:")
     for task in tasks:
         print(f"{task['id']} - {task['title']} - {task['completed']}")
-
-show_tasks(tasks)
-
-
-def get_new_id(tasks: list[Task]) -> int:
-    max_id = 0
-    for task in tasks:
-        if (task["id"] > max_id):
-            max_id = task["id"]
-    return max_id + 1
 
 
 def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
@@ -66,7 +28,21 @@ def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
     tasks.append(task)
     return task
 
-add_task(tasks, "новое название", "medium")
-print(tasks)
+def find_task(tasks: list[Task], id : int) -> Task | None:
+    for task in tasks:
+        if task["id"] == id:
+            return task
+
+
+def main() -> None:
+    show_tasks(tasks)
+
+    add_task(tasks, "новое название", "medium")
+    print(tasks)
+
+
+
+if __name__ == "__main__":
+    main()
 
 
