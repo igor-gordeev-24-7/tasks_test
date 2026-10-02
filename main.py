@@ -32,12 +32,21 @@ def find_task(tasks: list[Task], id : int) -> Task | None:
     for task in tasks:
         if task["id"] == id:
             return task
+    return None
+
+
+def complete_task(tasks: list[Task], id : int):
+    task = find_task(tasks, id)
+    task["completed"] = True
 
 
 def main() -> None:
     show_tasks(tasks)
 
     add_task(tasks, "новое название", "medium")
+    print(tasks)
+
+    complete_task(tasks, 1)
     print(tasks)
 
 
