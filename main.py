@@ -43,6 +43,18 @@ def delete_task(tasks: list[Task], id : int):
     task = find_task(tasks, id)
     tasks.remove(task)
 
+def search_tasks(tasks: list[Task], text: str) -> list[Task]:
+    result = []
+    find = False
+    for task in tasks:
+        if text.lower() in task['title'].lower():
+            result.append(task)
+            find = True
+        else:
+            find = False
+    return result
+
+
 def show_menu():
     stop = False
     while not stop:
@@ -52,6 +64,7 @@ def show_menu():
         print("3 - Найти задачу")
         print("4 - Выполнить задачу")
         print("5 - Удалить задачу")
+        print("6 - Найти задачу на части названия")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -87,6 +100,18 @@ def show_menu():
             delete_task(tasks, id)
             print("")
 
+        if (choice) == 6:
+            text = input("Введите часть названия задачи: ")
+            result = search_tasks(tasks, text)
+            print("")
+            if len(result) > 0:
+                for task in result:
+                    print(f"{task['id']} - {task['title']} - {task['completed']}")
+            else:
+                print("Задачи не найдены")
+            print("")
+
+
         if (choice) == 0:
             print("")
             print("Программа остановлена")
@@ -107,7 +132,6 @@ def main() -> None:
     # print(tasks)
 
     show_menu()
-
 
 if __name__ == "__main__":
     main()
