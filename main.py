@@ -86,12 +86,21 @@ def show_menu():
             add_task(tasks, titile, "medium")
             print("")
 
-        if (choice) == 3:
-            id = int(input("Введите id для поиска: "))
-            print("")
-            task = find_task(tasks, id)
-            print(f"{task['id']} - {task['title']} - {task['completed']} - {task['priority']}" )
-            print("")
+        if choice == 3:
+            try:
+                task_id = int(input("Введите id для поиска: "))
+            except ValueError:
+                print("Некорректный id: нужно целое число")
+            else:
+                task = find_task(tasks, task_id)
+                if task is None:
+                    print()
+                    print("Задача не найдена")
+                    print()
+                else:
+                    print()
+                    print(f"{task['id']} - {task['title']} - {task['completed']} - {task['priority']}")
+                    print()
 
         if (choice) == 4:
             id = int(input("Введите id для смены статуса: "))
