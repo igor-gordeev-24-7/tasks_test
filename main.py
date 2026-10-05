@@ -54,6 +54,8 @@ def search_tasks(tasks: list[Task], text: str) -> list[Task]:
             find = False
     return result
 
+def filter_tasks_by_status(tasks: list[Task], completed: bool) -> list[Task]:
+    return [task for task in tasks if task['completed'] == completed]
 
 def show_menu():
     stop = False
@@ -65,6 +67,7 @@ def show_menu():
         print("4 - Выполнить задачу")
         print("5 - Удалить задачу")
         print("6 - Найти задачу на части названия")
+        print("7 - Фильтр по статусу")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -111,6 +114,28 @@ def show_menu():
                 print("Задачи не найдены")
             print("")
 
+        if (choice) == 7:
+            print("")
+            print("1 - Показать выполненные")
+            print("2 - Показать невыполненные")
+            print("")
+
+            choice = int(input("Выберите пункт: "))
+
+            print("")
+            if choice not in (1,2):
+                print("Некорректный пункт")
+            print("")
+
+            if choice == 1:
+                print("")
+                show_tasks(filter_tasks_by_status(tasks, completed=True))
+                print("")
+
+            if choice == 2:
+                print("")
+                show_tasks(filter_tasks_by_status(tasks, completed=False))
+                print("")
 
         if (choice) == 0:
             print("")
@@ -132,6 +157,11 @@ def main() -> None:
     # print(tasks)
 
     show_menu()
+
+
+    # show_tasks(filter_tasks_by_status(tasks, completed=True))
+    #
+    # show_tasks(filter_tasks_by_status(tasks, completed=False))
 
 if __name__ == "__main__":
     main()
