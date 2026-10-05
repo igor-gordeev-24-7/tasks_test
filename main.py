@@ -74,7 +74,10 @@ def show_menu():
 
         if (choice) == 1:
             print("")
-            show_tasks(tasks)
+            if len(tasks) > 0:
+                show_tasks(tasks)
+            else:
+                print("Список пуст")
             print("")
 
         if (choice) == 2:
