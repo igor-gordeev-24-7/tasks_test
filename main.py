@@ -40,6 +40,12 @@ def complete_task(tasks: list[Task], id : int):
     task["completed"] = True
 
 
+def delete_task(tasks: list[Task], id : int):
+    task = find_task(tasks, id)
+    tasks.remove(task)
+
+
+
 def main() -> None:
     show_tasks(tasks)
 
@@ -49,6 +55,8 @@ def main() -> None:
     complete_task(tasks, 1)
     print(tasks)
 
+    delete_task(tasks, 1)
+    print(tasks)
 
 
 if __name__ == "__main__":
