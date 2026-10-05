@@ -36,12 +36,18 @@ def find_task(tasks: list[Task], task_id : int) -> Task | None:
 
 def complete_task(tasks: list[Task], id : int):
     task = find_task(tasks, id)
+    if task is None:
+        return None
     task['completed'] = True
     return task
 
-def delete_task(tasks: list[Task], id : int):
-    task = find_task(tasks, id)
+def delete_task(tasks: list[Task], task_id: int) -> None:
+    task = find_task(tasks, task_id)
+    if task is None:
+        print("Задача не найдена")
+        return
     tasks.remove(task)
+    print("Задача удалена")
 
 def search_tasks(tasks: list[Task], text: str) -> list[Task]:
     result = []
@@ -103,17 +109,40 @@ def show_menu():
                     print()
 
         if (choice) == 4:
-            id = int(input("Введите id для смены статуса: "))
-            task = complete_task(tasks, id)
-            print("")
-            print(f"ID - {task['id']}, статус - {task['completed']}")
-            print("")
+            try:
+                print("")
+                id = int(input("Введите id для смены статуса: "))
+                print("")
+            except ValueError:
+                print("")
+                print("Некорректный id: нужно целое число")
+                print("")
+            else:
+                task = complete_task(tasks, id)
+                if task is None:
+                    print("")
+                    print("Задача не найдена")
+                    print("")
+                else:
+                    print("")
+                    print(f"\nID - {task['id']}, статус - {task['completed']}\n")
+                    print("")
+
+
 
         if (choice) == 5:
-            id = int(input("Введите id для удаления: "))
-            print("")
-            delete_task(tasks, id)
-            print("")
+            try:
+                print("")
+                id = int(input("Введите id для смены статуса: "))
+                print("")
+            except ValueError:
+                print("")
+                print("Некорректный id: нужно целое число")
+                print("")
+            else:
+                print("")
+                delete_task(tasks, id)
+                print("")
 
         if (choice) == 6:
             text = input("Введите часть названия задачи: ")
