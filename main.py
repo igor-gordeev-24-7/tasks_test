@@ -132,15 +132,9 @@ def show_menu():
                 print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
 
         if (choice) == 6:
-            text = input("Введите часть названия задачи: ")
+            text = input("\nВведите часть названия задачи: ")
             result = search_tasks(tasks, text)
-            print("")
-            if len(result) > 0:
-                for task in result:
-                    print(f"{task['id']} - {task['title']} - {task['completed']}")
-            else:
-                print("Задачи не найдены")
-            print("")
+            show_tasks(result)
 
         if (choice) == 7:
             print("")
