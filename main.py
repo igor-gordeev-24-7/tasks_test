@@ -63,6 +63,10 @@ def search_tasks(tasks: list[Task], text: str) -> list[Task]:
 def filter_tasks_by_status(tasks: list[Task], completed: bool) -> list[Task]:
     return [task for task in tasks if task['completed'] == completed]
 
+def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
+    priority = priority.lower().strip()
+    return [task for task in tasks if task['priority'].lower().strip() == priority]
+
 def show_menu():
     stop = False
     while not stop:
@@ -74,6 +78,7 @@ def show_menu():
         print("5 - Удалить задачу")
         print("6 - Найти задачу на части названия")
         print("7 - Фильтр по статусу")
+        print("8 - Фильтр по приоритету")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -178,6 +183,27 @@ def show_menu():
                 show_tasks(filter_tasks_by_status(tasks, completed=False))
                 print("")
 
+        if (choice) == 8:
+            print("")
+            priority = input("Введите приоритет(low, medium, high): ").strip().lower()
+            print("")
+
+            if priority not in ("low", "medium", "high"):
+                print("")
+                print("Некорректный приоритет")
+                print("")
+            else:
+                found = filter_tasks_by_priority(tasks, priority)
+                if not found:
+                    print("")
+                    print(f"Задач с приоритетом {priority} не найдено")
+                    print("")
+                else:
+                    print("")
+                    show_tasks(found)
+                    print("")
+
+
         if (choice) == 0:
             print("")
             print("Программа остановлена")
@@ -186,23 +212,7 @@ def show_menu():
 
 
 def main() -> None:
-    # show_tasks(tasks)
-    #
-    # add_task(tasks, "новое название", "medium")
-    # print(tasks)
-    #
-    # complete_task(tasks, 1)
-    # print(tasks)
-    #
-    # delete_task(tasks, 1)
-    # print(tasks)
-
     show_menu()
-
-
-    # show_tasks(filter_tasks_by_status(tasks, completed=True))
-    #
-    # show_tasks(filter_tasks_by_status(tasks, completed=False))
 
 if __name__ == "__main__":
     main()
