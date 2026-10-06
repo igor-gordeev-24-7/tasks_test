@@ -50,15 +50,7 @@ def delete_task(tasks: list[Task], task_id: int) -> None:
     print("Задача удалена")
 
 def search_tasks(tasks: list[Task], text: str) -> list[Task]:
-    result = []
-    find = False
-    for task in tasks:
-        if text.lower() in task['title'].lower():
-            result.append(task)
-            find = True
-        else:
-            find = False
-    return result
+    return [task for task in tasks if text.lower().strip() in task['title'].lower()]
 
 def filter_tasks_by_status(tasks: list[Task], completed: bool) -> list[Task]:
     return [task for task in tasks if task['completed'] == completed]
