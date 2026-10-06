@@ -37,8 +37,6 @@ def find_task(tasks: list[Task], task_id : int) -> Task | None:
 
 def complete_task(tasks: list[Task], id : int):
     task = find_task(tasks, id)
-    if task is None:
-        return None
     task['completed'] = True
     return task
 
@@ -119,10 +117,11 @@ def show_menu():
 
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
-            task = complete_task(tasks, task_id)
+            task = find_task(tasks, task_id)
             if task is None:
                 print("\nЗадача не найдена\n")
             else:
+                complete_task(tasks, task_id)
                 print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
 
         if (choice) == 5:
