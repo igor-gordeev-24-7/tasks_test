@@ -59,6 +59,24 @@ def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
     priority = priority.lower().strip()
     return [task for task in tasks if task['priority'].lower().strip() == priority]
 
+def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
+    task = find_task(tasks, id)
+    if task is None:
+        return None
+    else:
+        task['title'] = new_title
+    return task
+
+def read_int(prompt: str) -> int:
+    while True:
+        raw = input(prompt).strip()
+        try:
+            return int(raw)
+        except ValueError:
+            print("Некорректный ввод: нужно целое число")
+
+
+
 def show_menu():
     stop = False
     while not stop:
@@ -194,6 +212,22 @@ def show_menu():
                     print("")
                     show_tasks(found)
                     print("")
+
+        if (choice) == 9:
+            print("")
+            task_id = read_int("Введите id для переименования: ")
+            new_title = input("Введите новое название: ").strip()
+
+            if not new_title:
+                print("Название не может быть пустым")
+            else:
+                task = rename_task(tasks, task_id, new_title)
+                if task is None:
+                    print("Задача с таким id отсутствует")
+                else:
+                    print(f"Задача переименована: {task['title']}")
+            print("")
+
 
 
         if (choice) == 0:
