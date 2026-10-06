@@ -61,6 +61,10 @@ def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
     task['title'] = new_title
     return task
 
+def get_task_statistics(tasks: list[Task], id: int, priority: str) -> Task:
+    task = find_task(tasks, id)
+    task['priority'] = priority.lower().strip()
+
 def read_int(prompt: str) -> int:
     while True:
         raw = input(prompt).strip()
@@ -84,6 +88,7 @@ def show_menu():
         print("7 - Фильтр по статусу")
         print("8 - Фильтр по приоритету")
         print("9 - Переименовать задачу")
+        print("10 - Изменить приоритет задачи")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -174,6 +179,22 @@ def show_menu():
                 else:
                     result = rename_task(tasks, task_id, new_title)
                     print(f"\nЗадача переименована: {result['title']}\n")
+
+        if (choice) == 10:
+            task_id = read_int("\nВведите id для смены приоритета: ")
+            task = find_task(tasks, task_id)
+
+            if task is None:
+                print("\nЗадача с таким id отсутствует\n")
+            else:
+                new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
+                if new_priority not in ("low", "medium", "high"):
+                    print("\nНекорректный приоритет\n")
+                else:
+                    task["priority"] = new_priority
+                    print("\nПриоритет изменен")
+                    print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
+
 
         if (choice) == 0:
             print("")
