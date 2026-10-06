@@ -43,11 +43,7 @@ def complete_task(tasks: list[Task], id : int):
 
 def delete_task(tasks: list[Task], task_id: int) -> None:
     task = find_task(tasks, task_id)
-    if task is None:
-        print("Задача не найдена")
-        return
     tasks.remove(task)
-    print("Задача удалена")
 
 def search_tasks(tasks: list[Task], text: str) -> list[Task]:
     return [task for task in tasks if text.lower().strip() in task['title'].lower()]
@@ -126,18 +122,13 @@ def show_menu():
                 print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
 
         if (choice) == 5:
-            try:
-                print("")
-                id = int(input("Введите id для смены статуса: "))
-                print("")
-            except ValueError:
-                print("")
-                print("Некорректный id: нужно целое число")
-                print("")
+            task_id = read_int("Введите id задачи для удаления: ")
+            task = find_task(tasks, task_id)
+            if task is None:
+                print("\nЗадача для удаления не найдена\n")
             else:
-                print("")
-                delete_task(tasks, id)
-                print("")
+                delete_task(tasks, task_id)
+                print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
 
         if (choice) == 6:
             text = input("Введите часть названия задачи: ")
