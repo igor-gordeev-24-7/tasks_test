@@ -83,6 +83,7 @@ def show_menu():
         print("6 - Найти задачу на части названия")
         print("7 - Фильтр по статусу")
         print("8 - Фильтр по приоритету")
+        print("9 - Переименовать задачу")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -161,21 +162,18 @@ def show_menu():
                     show_tasks(found)
 
         if (choice) == 9:
-            print("")
-            task_id = read_int("Введите id для переименования: ")
-            new_title = input("Введите новое название: ").strip()
+            task_id = read_int("\nВведите id для переименования: ")
+            task = find_task(tasks, task_id)
 
-            if not new_title:
-                print("Название не может быть пустым")
+            if task is None:
+                print("\nЗадача с таким id отсутствует\n")
             else:
-                task = rename_task(tasks, task_id, new_title)
-                if task is None:
-                    print("Задача с таким id отсутствует")
+                new_title = input("\nВведите новое название: \n").strip()
+                if not new_title:
+                    print("\nНазвание не может быть пустым\n")
                 else:
-                    print(f"Задача переименована: {task['title']}")
-            print("")
-
-
+                    result = rename_task(tasks, task_id, new_title)
+                    print(f"\nЗадача переименована: {result['title']}\n")
 
         if (choice) == 0:
             print("")
