@@ -152,24 +152,16 @@ def show_menu():
                 show_tasks(filter_tasks_by_status(tasks, completed=False))
 
         if (choice) == 8:
-            print("")
-            priority = input("Введите приоритет(low, medium, high): ").strip().lower()
-            print("")
+            priority = input("\nВведите приоритет для поиска задач(low, medium, high): \n").strip().lower()
 
             if priority not in ("low", "medium", "high"):
-                print("")
-                print("Некорректный приоритет")
-                print("")
+                print("\nНекорректный приоритет\n")
             else:
                 found = filter_tasks_by_priority(tasks, priority)
                 if not found:
-                    print("")
-                    print(f"Задач с приоритетом {priority} не найдено")
-                    print("")
+                    print(f"\nЗадач с приоритетом {priority} не найдено\n")
                 else:
-                    print("")
                     show_tasks(found)
-                    print("")
 
         if (choice) == 9:
             print("")
