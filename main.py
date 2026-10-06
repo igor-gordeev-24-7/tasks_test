@@ -118,26 +118,12 @@ def show_menu():
                 print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
 
         if (choice) == 4:
-            try:
-                print("")
-                id = int(input("Введите id для смены статуса: "))
-                print("")
-            except ValueError:
-                print("")
-                print("Некорректный id: нужно целое число")
-                print("")
+            task_id = read_int("Введите id задачи для выполнения: ")
+            task = complete_task(tasks, task_id)
+            if task is None:
+                print("\nЗадача не найдена\n")
             else:
-                task = complete_task(tasks, id)
-                if task is None:
-                    print("")
-                    print("Задача не найдена")
-                    print("")
-                else:
-                    print("")
-                    print(f"\nID - {task['id']}, статус - {task['completed']}\n")
-                    print("")
-
-
+                print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
 
         if (choice) == 5:
             try:
