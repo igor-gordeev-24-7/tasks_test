@@ -69,7 +69,7 @@ def read_int(prompt: str) -> int:
         try:
             return int(raw)
         except ValueError:
-            print("Некорректный ввод: нужно целое число")
+            print("\nНекорректный ввод: нужно целое число\n")
 
 
 
