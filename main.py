@@ -58,10 +58,7 @@ def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
 
 def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
     task = find_task(tasks, id)
-    if task is None:
-        return None
-    else:
-        task['title'] = new_title
+    task['title'] = new_title
     return task
 
 def read_int(prompt: str) -> int:
