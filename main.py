@@ -137,27 +137,19 @@ def show_menu():
             show_tasks(result)
 
         if (choice) == 7:
-            print("")
-            print("1 - Показать выполненные")
-            print("2 - Показать невыполненные")
-            print("")
+            print("\n1 - Показать выполненные")
+            print("2 - Показать невыполненные\n")
 
             choice = int(input("Выберите пункт: "))
 
-            print("")
             if choice not in (1,2):
-                print("Некорректный пункт")
-            print("")
+                print("\nНекорректный пункт\n")
 
             if choice == 1:
-                print("")
                 show_tasks(filter_tasks_by_status(tasks, completed=True))
-                print("")
 
             if choice == 2:
-                print("")
                 show_tasks(filter_tasks_by_status(tasks, completed=False))
-                print("")
 
         if (choice) == 8:
             print("")
