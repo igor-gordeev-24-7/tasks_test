@@ -11,11 +11,12 @@ from helpers import get_new_id
 
 def show_tasks(tasks: list[Task]) -> None:
     if len(tasks) == 0:
-        print(f"Список задач пуст")
+        print("\nСписок задач пуст\n")
         return
-    print(f"Список задач:")
+    print("\nСписок задач:")
     for task in tasks:
         print(f"{task['id']} - {task['title']} - {task['completed']}")
+    print()
 
 
 def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
