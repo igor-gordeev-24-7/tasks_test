@@ -21,6 +21,7 @@ def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
         "priority": priority,
     }
     tasks.append(task)
+    save_tasks(tasks)
     return task
 
 def find_task(tasks: list[Task], task_id : int) -> Task | None:
@@ -32,11 +33,13 @@ def find_task(tasks: list[Task], task_id : int) -> Task | None:
 def complete_task(tasks: list[Task], id : int):
     task = find_task(tasks, id)
     task['completed'] = True
+    save_tasks(tasks)
     return task
 
 def delete_task(tasks: list[Task], task_id: int) -> None:
     task = find_task(tasks, task_id)
     tasks.remove(task)
+    save_tasks(tasks)
 
 def search_tasks(tasks: list[Task], text: str) -> list[Task]:
     return [task for task in tasks if text.lower().strip() in task['title'].lower()]
@@ -51,6 +54,7 @@ def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
 def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
     task = find_task(tasks, id)
     task['title'] = new_title
+    save_tasks(tasks)
     return task
 
 def get_task_statistics(tasks: list[Task], id: int, priority: str) -> Task:
