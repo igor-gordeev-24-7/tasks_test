@@ -96,7 +96,12 @@ def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
     }
     return task_statistics
 
-
+def delete_completed_tasks(tasks: list[Task]) -> int:
+    completed = [task for task in tasks if task['completed']]
+    if not completed:
+        return 0
+    tasks[:] = [task for task in tasks if not task['completed']]
+    return len(completed)
 
 
 def show_menu():
@@ -114,6 +119,7 @@ def show_menu():
         print("9 - Переименовать задачу")
         print("10 - Изменить приоритет задачи")
         print("11 - Показать статистику")
+        print("12 - Удалить все выполненные задачи")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -236,6 +242,16 @@ def show_menu():
             print(f"medium: {stats['medium_priority']}")
             print(f"high: {stats['high_priority']}")
             print()
+
+        if choice == 12:
+            print()
+            count = delete_completed_tasks(tasks)
+            if count == 0:
+                print("Выполненных задач нет")
+            else:
+                print(f"Удалено выполненных задач: {count}")
+            print()
+
 
 
 
