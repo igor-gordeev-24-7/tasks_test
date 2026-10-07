@@ -13,7 +13,6 @@ def show_tasks(tasks: list[Task]) -> None:
         print(f"{task['id']} - {task['title']} - {task['completed']}")
     print()
 
-
 def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
     task = {
         "id": get_new_id(tasks),
