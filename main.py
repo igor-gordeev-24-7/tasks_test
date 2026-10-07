@@ -10,7 +10,7 @@ def show_tasks(tasks: list[Task]) -> None:
         return
     print("\nСписок задач:")
     for task in tasks:
-        print(f"{task['id']} - {task['title']} - {task['completed']}")
+        print(f"{task['id']} - {task['title']} - {task['completed']} - {task['priority']}")
     print()
 
 def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
