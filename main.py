@@ -101,6 +101,15 @@ def delete_completed_tasks(tasks: list[Task]) -> int:
     tasks[:] = [task for task in tasks if not task['completed']]
     return len(completed)
 
+PRIORITY_WEIGHT = {
+    "high": 0,
+    "medium": 1,
+    "low": 2,
+}
+
+def sort_tasks_by_priority(tasks: list[Task]) -> list[Task]:
+    return sorted(tasks, key=lambda task: PRIORITY_WEIGHT[task['priority']])
+
 
 def show_menu():
     stop = False
@@ -118,6 +127,7 @@ def show_menu():
         print("10 - Изменить приоритет задачи")
         print("11 - Показать статистику")
         print("12 - Удалить все выполненные задачи")
+        print("13 - Сортировка по приоритету")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -250,9 +260,9 @@ def show_menu():
                 print(f"Удалено выполненных задач: {count}")
             print()
 
-
-
-
+        if (choice) == 13:
+            print('Отсортированный список задач по приоритету:')
+            show_tasks(sort_tasks_by_priority(tasks))
 
         if (choice) == 0:
             print("")
