@@ -71,6 +71,32 @@ def read_int(prompt: str) -> int:
         except ValueError:
             print("\nНекорректный ввод: нужно целое число\n")
 
+def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
+    len_of_tasks = len(tasks)
+    len_completed_of_tasks = len(filter_tasks_by_status(tasks, True))
+    len_not_completed_of_tasks = len(filter_tasks_by_status(tasks, False))
+    len_low_priority_tasks = len(filter_tasks_by_priority(tasks, "low"))
+    len_medium_priority_tasks = len(filter_tasks_by_priority(tasks, "medium"))
+    len_high_priority_tasks = len(filter_tasks_by_priority(tasks, "high"))
+
+    percentage_of_completed_tasks = (
+        len_completed_of_tasks / len_of_tasks * 100
+        if len_of_tasks > 0
+        else 0.0
+    )
+
+    task_statistics = {
+        "total": len_of_tasks,
+        "completed": len_completed_of_tasks,
+        "not_completed": len_not_completed_of_tasks,
+        "low_priority": len_low_priority_tasks,
+        "medium_priority": len_medium_priority_tasks,
+        "high_priority": len_high_priority_tasks,
+        "percentage_completed": percentage_of_completed_tasks,
+    }
+    return task_statistics
+
+
 
 
 def show_menu():
@@ -87,6 +113,7 @@ def show_menu():
         print("8 - Фильтр по приоритету")
         print("9 - Переименовать задачу")
         print("10 - Изменить приоритет задачи")
+        print("11 - Показать статистику")
         print("0 - Закрыть меню")
 
         choice: int = int(input())
@@ -193,6 +220,24 @@ def show_menu():
                     task["priority"] = new_priority
                     print("\nПриоритет изменен")
                     print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
+
+        if choice == 11:
+            stats = get_task_statistics(tasks)
+
+            print()
+            print("Статистика Task Tracker")
+            print(f"Всего задач: {stats['total']}")
+            print(f"Выполнено: {stats['completed']}")
+            print(f"Осталось: {stats['not_completed']}")
+            print(f"Прогресс: {stats['percentage_completed']:.1f}%")
+            print()
+            print("Приоритеты:")
+            print(f"low: {stats['low_priority']}")
+            print(f"medium: {stats['medium_priority']}")
+            print(f"high: {stats['high_priority']}")
+            print()
+
+
 
 
         if (choice) == 0:
