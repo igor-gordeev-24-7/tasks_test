@@ -1,5 +1,4 @@
 from aliases import Task
-from data import tasks
 from helpers import get_new_id
 
 # show_tasks()
