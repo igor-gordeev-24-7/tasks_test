@@ -1,12 +1,8 @@
 from aliases import Task
 from helpers import get_new_id
+from data import load_tasks, save_tasks
 
-# show_tasks()
-# add_task()
-# find_task()
-# complete_task()
-# delete_task()
-# show_menu()
+tasks = load_tasks()
 
 def show_tasks(tasks: list[Task]) -> None:
     if len(tasks) == 0:
