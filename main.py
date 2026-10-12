@@ -42,13 +42,13 @@ def delete_task(tasks: list[Task], task_id: int) -> None:
     save_tasks(tasks)
 
 def search_tasks(tasks: list[Task], text: str) -> list[Task]:
-    return [task for task in tasks if text.lower().strip() in task['title'].lower()]
+    return [task for task in tasks if text.strip().lower() in task['title'].lower()]
 
 def filter_tasks_by_status(tasks: list[Task], completed: bool) -> list[Task]:
     return [task for task in tasks if task['completed'] == completed]
 
 def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
-    priority = priority.lower().strip()
+    priority = priority.strip().lower()
     return [task for task in tasks if task['priority'].lower().strip() == priority]
 
 def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
@@ -59,7 +59,7 @@ def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
 
 def get_task_statistics(tasks: list[Task], id: int, priority: str) -> Task:
     task = find_task(tasks, id)
-    task['priority'] = priority.lower().strip()
+    task['priority'] = priority.strip().lower()
 
 def read_int(prompt: str) -> int:
     while True:
