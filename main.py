@@ -260,11 +260,11 @@ def show_menu():
                 print(f"Удалено выполненных задач: {count}")
             print()
 
-        if (choice) == 13:
+        if choice == 13:
             print('Отсортированный список задач по приоритету:')
             show_tasks(sort_tasks_by_priority(tasks))
 
-        if (choice) == 0:
+        if choice == 0:
             print("")
             print("Программа остановлена")
             print("")
