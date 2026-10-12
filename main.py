@@ -1,6 +1,7 @@
 from aliases import Task
 from helpers import get_new_id
 from data import load_tasks, save_tasks
+from menu_text import MENU_TEXT
 
 tasks = load_tasks()
 
@@ -114,21 +115,7 @@ def sort_tasks_by_priority(tasks: list[Task]) -> list[Task]:
 def show_menu():
     stop = False
     while not stop:
-        print("Меню - выберите пункт")
-        print("1 - Показать задачи")
-        print("2 - Добавить задачу")
-        print("3 - Найти задачу")
-        print("4 - Выполнить задачу")
-        print("5 - Удалить задачу")
-        print("6 - Найти задачу на части названия")
-        print("7 - Фильтр по статусу")
-        print("8 - Фильтр по приоритету")
-        print("9 - Переименовать задачу")
-        print("10 - Изменить приоритет задачи")
-        print("11 - Показать статистику")
-        print("12 - Удалить все выполненные задачи")
-        print("13 - Сортировка по приоритету")
-        print("0 - Закрыть меню")
+        print(MENU_TEXT)
 
         choice: int = int(input())
 
