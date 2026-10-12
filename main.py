@@ -5,6 +5,10 @@ from menu_text import MENU_TEXT
 
 tasks = load_tasks()
 
+def show_task(task: Task):
+    print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
+
+
 def show_tasks(tasks: list[Task]) -> None:
     if len(tasks) == 0:
         print("\nСписок задач пуст\n")
@@ -140,7 +144,7 @@ def show_menu():
             if not task:
                 print("\nЗадача не найдена\n")
             else:
-                print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
+                show_task(task)
 
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
@@ -149,7 +153,7 @@ def show_menu():
                 print("\nЗадача не найдена\n")
             else:
                 complete_task(tasks, task_id)
-                print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
+                show_task(task)
 
         if (choice) == 5:
             task_id = read_int("Введите id задачи для удаления: ")
