@@ -137,7 +137,7 @@ def show_menu():
 
             task = find_task(tasks, task_id)
 
-            if task is None:
+            if not task:
                 print("\nЗадача не найдена\n")
             else:
                 print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
@@ -145,7 +145,7 @@ def show_menu():
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
             task = find_task(tasks, task_id)
-            if task is None:
+            if not task:
                 print("\nЗадача не найдена\n")
             else:
                 complete_task(tasks, task_id)
@@ -154,7 +154,7 @@ def show_menu():
         if (choice) == 5:
             task_id = read_int("Введите id задачи для удаления: ")
             task = find_task(tasks, task_id)
-            if task is None:
+            if not task:
                 print("\nЗадача для удаления не найдена\n")
             else:
                 delete_task(tasks, task_id)
@@ -196,7 +196,7 @@ def show_menu():
             task_id = read_int("\nВведите id для переименования: ")
             task = find_task(tasks, task_id)
 
-            if task is None:
+            if not task:
                 print("\nЗадача с таким id отсутствует\n")
             else:
                 new_title = input("\nВведите новое название: \n").strip()
@@ -210,7 +210,7 @@ def show_menu():
             task_id = read_int("\nВведите id для смены приоритета: ")
             task = find_task(tasks, task_id)
 
-            if task is None:
+            if not task:
                 print("\nЗадача с таким id отсутствует\n")
             else:
                 new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
