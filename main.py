@@ -192,12 +192,13 @@ def show_menu():
 
             if priority not in ("low", "medium", "high"):
                 print("\nНекорректный приоритет\n")
-            else:
-                found = filter_tasks_by_priority(tasks, priority)
-                if not found:
-                    print(f"\nЗадач с приоритетом {priority} не найдено\n")
-                    continue
-                show_tasks(found)
+                continue
+
+            found = filter_tasks_by_priority(tasks, priority)
+            if not found:
+                print(f"\nЗадач с приоритетом {priority} не найдено\n")
+                continue
+            show_tasks(found)
 
         if (choice) == 9:
             task_id = read_int("\nВведите id для переименования: ")
