@@ -116,8 +116,7 @@ def show_menu():
     stop = False
     while not stop:
         print(MENU_TEXT)
-
-        choice: int = int(input())
+        choice = read_int("Введите пункт меню: ")
 
         if (choice) == 1:
             print("")
