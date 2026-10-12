@@ -216,7 +216,7 @@ def show_menu():
             result = rename_task(tasks, task_id, new_title)
             print(f"\nЗадача переименована: {result['title']}\n")
 
-        if (choice) == 10:
+        if choice == 10:
             task_id = read_int("\nВведите id для смены приоритета: ")
             task = find_task(tasks, task_id)
 
