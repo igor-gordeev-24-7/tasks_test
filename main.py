@@ -99,6 +99,21 @@ def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
     }
     return task_statistics
 
+
+def show_statistics(stats: dict) -> None:
+    print()
+    print("Статистика Task Tracker")
+    print(f"Всего задач: {stats['total']}")
+    print(f"Выполнено: {stats['completed']}")
+    print(f"Осталось: {stats['not_completed']}")
+    print(f"Прогресс: {stats['percentage_completed']:.1f}%")
+    print()
+    print("Приоритеты:")
+    print(f"low: {stats['low_priority']}")
+    print(f"medium: {stats['medium_priority']}")
+    print(f"high: {stats['high_priority']}")
+    print()
+
 def delete_completed_tasks(tasks: list[Task]) -> int:
     completed = [task for task in tasks if task['completed']]
     if not completed:
@@ -234,20 +249,7 @@ def show_menu():
             print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
 
         if choice == 11:
-            stats = get_task_statistics(tasks)
-
-            print()
-            print("Статистика Task Tracker")
-            print(f"Всего задач: {stats['total']}")
-            print(f"Выполнено: {stats['completed']}")
-            print(f"Осталось: {stats['not_completed']}")
-            print(f"Прогресс: {stats['percentage_completed']:.1f}%")
-            print()
-            print("Приоритеты:")
-            print(f"low: {stats['low_priority']}")
-            print(f"medium: {stats['medium_priority']}")
-            print(f"high: {stats['high_priority']}")
-            print()
+            show_statistics(get_task_statistics(tasks))
 
         if choice == 12:
             print()
