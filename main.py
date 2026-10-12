@@ -176,7 +176,7 @@ def show_menu():
             print("\n1 - Показать выполненные")
             print("2 - Показать невыполненные\n")
 
-            choice = int(input("Выберите пункт: "))
+            choice = read_int("Выберите пункт: ")
 
             if choice not in (1,2):
                 print("\nНекорректный пункт\n")
