@@ -143,26 +143,29 @@ def show_menu():
 
             if not task:
                 print("\nЗадача не найдена\n")
-            else:
-                show_task(task)
+                continue
+
+            show_task(task)
 
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
             task = find_task(tasks, task_id)
             if not task:
                 print("\nЗадача не найдена\n")
-            else:
-                complete_task(tasks, task_id)
-                show_task(task)
+                continue
+
+            complete_task(tasks, task_id)
+            show_task(task)
 
         if (choice) == 5:
             task_id = read_int("Введите id задачи для удаления: ")
             task = find_task(tasks, task_id)
             if not task:
                 print("\nЗадача для удаления не найдена\n")
-            else:
-                delete_task(tasks, task_id)
-                print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
+                continue
+
+            delete_task(tasks, task_id)
+            print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
 
         if (choice) == 6:
             text = input("\nВведите часть названия задачи: ")
@@ -193,8 +196,8 @@ def show_menu():
                 found = filter_tasks_by_priority(tasks, priority)
                 if not found:
                     print(f"\nЗадач с приоритетом {priority} не найдено\n")
-                else:
-                    show_tasks(found)
+                    continue
+                show_tasks(found)
 
         if (choice) == 9:
             task_id = read_int("\nВведите id для переименования: ")
@@ -202,13 +205,15 @@ def show_menu():
 
             if not task:
                 print("\nЗадача с таким id отсутствует\n")
-            else:
-                new_title = input("\nВведите новое название: \n").strip()
-                if not new_title:
-                    print("\nНазвание не может быть пустым\n")
-                else:
-                    result = rename_task(tasks, task_id, new_title)
-                    print(f"\nЗадача переименована: {result['title']}\n")
+                continue
+
+            new_title = input("\nВведите новое название: \n").strip()
+            if not new_title:
+                print("\nНазвание не может быть пустым\n")
+                continue
+
+            result = rename_task(tasks, task_id, new_title)
+            print(f"\nЗадача переименована: {result['title']}\n")
 
         if (choice) == 10:
             task_id = read_int("\nВведите id для смены приоритета: ")
@@ -216,14 +221,16 @@ def show_menu():
 
             if not task:
                 print("\nЗадача с таким id отсутствует\n")
-            else:
-                new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
-                if new_priority not in ("low", "medium", "high"):
-                    print("\nНекорректный приоритет\n")
-                else:
-                    task["priority"] = new_priority
-                    print("\nПриоритет изменен")
-                    print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
+                continue
+
+            new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
+            if new_priority not in ("low", "medium", "high"):
+                print("\nНекорректный приоритет\n")
+                continue
+
+            task["priority"] = new_priority
+            print("\nПриоритет изменен")
+            print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
 
         if choice == 11:
             stats = get_task_statistics(tasks)
