@@ -200,7 +200,7 @@ def show_menu():
                 continue
             show_tasks(found)
 
-        if (choice) == 9:
+        if choice == 9:
             task_id = read_int("\nВведите id для переименования: ")
             task = find_task(tasks, task_id)
 
