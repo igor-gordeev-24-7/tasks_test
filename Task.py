@@ -72,3 +72,15 @@ class Task:
             f"Дедлайн: {deadline}{overdue}\n"
             f"Статус: {status}"
         )
+
+    @staticmethod
+    def is_valid_title(title: str) -> bool:
+        return isinstance(title, str) and title.strip() != ""
+
+    @staticmethod
+    def is_valid_priority(priority: str) -> bool:
+        return priority in Task.ALLOWED_PRIORITIES
+
+    @staticmethod
+    def is_valid_id(task_id: int) -> bool:
+        return isinstance(task_id, int) and not isinstance(task_id, bool) and task_id > 0
