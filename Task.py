@@ -57,7 +57,7 @@ class Task:
 
     def show_info(self) -> None:
         status = "выполнена" if self.is_completed else "не выполнена"
-        deadline = self.deadline.isoformat() if self.deadline else "без дедлайна"
+        deadline = self.deadline.isoformat() if self.deadline else "без срока"
         overdue = " Просрочена" if self.is_overdue() else ""
 
         print(
