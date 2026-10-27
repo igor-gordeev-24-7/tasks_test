@@ -48,5 +48,11 @@ class Task:
         task['is_completed'] = True
         save_tasks(tasks)
 
+    def is_overdue(self) -> bool:
+        if self.deadline is None:
+            return False
+        if self.is_complited:
+            return False
+        return self.deadline < date.today()
 
 
