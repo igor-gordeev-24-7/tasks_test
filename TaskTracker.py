@@ -47,6 +47,8 @@ class TaskTracker:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
     def add_task(self, task: Task) -> None:
+        if self.find_task(task.id) is not None:
+            raise ValueError(f"Задача с id {task.id} уже существует")
         self.tasks.append(task)
         self.save()
 
