@@ -50,6 +50,12 @@ class TaskTracker:
         self.tasks.append(task)
         self.save()
 
+    def find_task(self, task_id: int) -> Task | None:
+        for task in self.tasks:
+            if task.id == task_id:
+                return task
+        return None
+
 
 
 
