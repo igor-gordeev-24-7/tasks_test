@@ -5,6 +5,8 @@ from data import save_tasks
 
 class Task:
     ALLOWED_PRIORITIES = ("low", "middle", "high")
+    DATE_FORMAT = "%Y-%m-%d"
+    created_count = 0
 
     def __init__(
         self,
@@ -26,6 +28,8 @@ class Task:
         self.deadline = deadline
         self.is_completed = is_completed
         self.priority = priority
+
+        Task.created_count += 1
 
     def __str__(self) -> str:
         status = "выполнена" if self.is_completed else "не выполнена"
