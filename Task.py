@@ -55,4 +55,16 @@ class Task:
             return False
         return self.deadline < date.today()
 
+    def show_info(self) -> None:
+        status = "выполнена" if self.is_completed else "не выполнена"
+        deadline = self.deadline.isoformat() if self.deadline else "без дедлайна"
+        overdue = " Просрочена" if self.is_overdue() else ""
 
+        print(
+            f"ID: {self.id}\n"
+            f"Название: {self.title}\n"
+            f"Приоритет: {self.priority}\n"
+            f"Добавлена: {self.add_date.isoformat()}\n"
+            f"Дедлайн: {deadline}{overdue}\n"
+            f"Статус: {status}"
+        )
