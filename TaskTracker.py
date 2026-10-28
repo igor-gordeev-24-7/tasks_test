@@ -71,6 +71,22 @@ class TaskTracker:
         self.tasks.remove(task)
         self.save()
 
+    def filter_tasks(
+            self,
+            *,
+            priority: str | None = None,
+            completed: bool | None = None,
+            overdue: bool | None = None,
+    ) -> list[Task]:
+        result = self.tasks
+        if priority is not None:
+            result = [t for t in result if t.priority == priority]
+        if completed is not None:
+            result = [t for t in result if t.is_completed == completed]
+        if overdue is not None:
+            result = [t for t in result if t.is_overdue() == overdue]
+        return result
+
 
 
 
