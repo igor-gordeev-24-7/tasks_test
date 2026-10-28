@@ -219,10 +219,10 @@ def show_menu():
             tracker.delete_task(task_id)
             print(f"\nЗадача - {task.title} - id - {task.id} - удалена\n")
 
-        # if (choice) == 6:
-        #     text = input("\nВведите часть названия задачи: ")
-        #     result = search_tasks(tasks, text)
-        #     show_tasks(result)
+        if (choice) == 6:
+            text = input("\nВведите часть названия задачи: ")
+            result = tracker.search_tasks_by_text(text)
+            tracker.show_tasks(result)
         #
         # if (choice) == 7:
         #     print("\n1 - Показать выполненные")
