@@ -66,6 +66,11 @@ class TaskTracker:
         self.save()
         return task
 
+    def delete_task(self, task_id: int) -> None:
+        task = self.find_task(task_id)
+        self.tasks.remove(task)
+        self.save()
+
 
 
 
