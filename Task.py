@@ -55,7 +55,7 @@ class Task:
     def is_overdue(self) -> bool:
         if self.deadline is None:
             return False
-        if self.is_complited:
+        if self.is_completed:
             return False
         return self.deadline < date.today()
 
