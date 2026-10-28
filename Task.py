@@ -65,12 +65,12 @@ class Task:
         overdue = " Просрочена" if self.is_overdue() else ""
 
         print(
-            f"ID: {self.id}\n"
+            f"\nID: {self.id}"
             f"Название: {self.title}\n"
             f"Приоритет: {self.priority}\n"
             f"Добавлена: {self.add_date.isoformat()}\n"
             f"Дедлайн: {deadline}{overdue}\n"
-            f"Статус: {status}"
+            f"Статус: {status}\n"
         )
 
     @staticmethod
