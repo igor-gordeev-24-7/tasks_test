@@ -17,19 +17,6 @@ class TaskTracker:
             data = json.load(f)
         return [self._task_from_dict(item) for item in data]
 
-    @staticmethod
-    def _task_from_dict(d: dict) -> Task:
-        return Task(
-            id=d["id"],
-            title=d["title"],
-            add_date=datetime.strptime(d["add_date"], "%Y-%m-%d").date(),
-            deadline=(
-                datetime.strptime(d["deadline"], "%Y-%m-%d").date()
-                if d.get("deadline") else None
-            ),
-            is_completed=d.get("is_completed", False),
-            priority=d.get("priority", "low"),
-        )
 
     def save_to_file(self) -> None:
         data = [t.to_dict() for t in self.tasks]
