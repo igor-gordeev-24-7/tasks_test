@@ -280,8 +280,8 @@ def show_menu():
                 print("\nЗадача с таким id отсутствует\n")
                 continue
 
-            new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
-            if new_priority not in ("low", "medium", "high"):
+            new_priority = input("\nВведите приоритет(low, middle, high): ").strip()
+            if new_priority not in ("low", "middle", "high"):
                 print("\nНекорректный приоритет\n")
                 continue
 
