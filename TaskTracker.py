@@ -109,7 +109,11 @@ class TaskTracker:
             task.show_info()
             print("-" * 40)
 
-
+    def search_tasks_by_text(self, text: str) -> list[Task]:
+        needle = text.strip().lower()
+        if not needle:
+            return []
+        return [task for task in self.tasks if needle in task.title.lower()]
 
 
 
