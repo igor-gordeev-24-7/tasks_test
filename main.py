@@ -272,22 +272,23 @@ def show_menu():
 
             print(f"\nЗадача переименована: {task.title}\n")
         #
-        # if choice == 10:
-        #     task_id = read_int("\nВведите id для смены приоритета: ")
-        #     task = find_task(tasks, task_id)
-        #
-        #     if not task:
-        #         print("\nЗадача с таким id отсутствует\n")
-        #         continue
-        #
-        #     new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
-        #     if new_priority not in ("low", "medium", "high"):
-        #         print("\nНекорректный приоритет\n")
-        #         continue
-        #
-        #     task["priority"] = new_priority
-        #     print("\nПриоритет изменен")
-        #     print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
+        if choice == 10:
+            task_id = read_int("\nВведите id для смены приоритета: ")
+            task = tracker.find_task(task_id)
+
+            if not task:
+                print("\nЗадача с таким id отсутствует\n")
+                continue
+
+            new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
+            if new_priority not in ("low", "medium", "high"):
+                print("\nНекорректный приоритет\n")
+                continue
+
+            task.priority = new_priority
+            tracker.save_to_file()
+            print("\nПриоритет изменен")
+            print(f"Задача - {task.title} - приоритет {task.priority}\n")
         #
         # if choice == 11:
         #     show_statistics(get_task_statistics(tasks))
