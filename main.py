@@ -198,16 +198,16 @@ def show_menu():
                 continue
 
             task.show_info()
-        #
-        # if (choice) == 4:
-        #     task_id = read_int("Введите id задачи для выполнения: ")
-        #     task = find_task(tasks, task_id)
-        #     if not task:
-        #         print("\nЗадача не найдена\n")
-        #         continue
-        #
-        #     complete_task(tasks, task_id)
-        #     show_task(task)
+
+        if (choice) == 4:
+            task_id = read_int("Введите id задачи для выполнения: ")
+            task = tracker.find_task(task_id)
+            if not task:
+                print("\nЗадача не найдена\n")
+                continue
+
+            tracker.complete_task(task_id)
+            task.show_info()
         #
         # if (choice) == 5:
         #     task_id = read_int("Введите id задачи для удаления: ")
