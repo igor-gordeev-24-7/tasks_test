@@ -135,6 +135,10 @@ class TaskTracker:
         self.save_to_file()
         return len(to_delete)
 
+    def sort_tasks_by_priority(self, reverse: bool = False) -> list[Task]:
+        order = {"low": 0, "middle": 1, "high": 2}
+        return sorted(self.tasks, key=lambda t: order.get(t.priority, -1), reverse=reverse)
+
 
 
 
