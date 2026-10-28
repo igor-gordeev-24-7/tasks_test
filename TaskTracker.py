@@ -38,6 +38,19 @@ class TaskTracker:
             print(f"Файл {self.path} пуст.")
             return
 
+        skipped = 0
+        for index, item in enumerate(raw, start=1):
+            try:
+                self.tasks.append(Task.from_dict(item))
+            except (KeyError, ValueError, TypeError) as e:
+                skipped += 1
+                print(f"Задача #{index} пропущена: {e}")
+
+        if skipped:
+            print(f"Загружено: {len(self.tasks)}, пропущено: {skipped}.")
+        else:
+            print(f"Загружено задач: {len(self.tasks)}.")
+
     def save_to_file(self) -> None:
         data = [t.to_dict() for t in self.tasks]
         try:
