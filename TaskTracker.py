@@ -87,6 +87,14 @@ class TaskTracker:
             result = [t for t in result if t.is_overdue() == overdue]
         return result
 
+    def show_tasks(self, tasks: list[Task] | None = None) -> None:
+        tasks = self.tasks if tasks is None else tasks
+        if not tasks:
+            print("Задач нет")
+            return
+        for task in tasks:
+            task.show_info()
+            print("-" * 40)
 
 
 
