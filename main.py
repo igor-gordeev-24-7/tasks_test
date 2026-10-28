@@ -239,18 +239,18 @@ def show_menu():
             if choice == 2:
                 tracker.show_tasks(tracker.filter_tasks(completed=False))
 
-        # if (choice) == 8:
-        #     priority = input("\nВведите приоритет для поиска задач(low, medium, high): \n").strip().lower()
-        #
-        #     if priority not in ("low", "medium", "high"):
-        #         print("\nНекорректный приоритет\n")
-        #         continue
-        #
-        #     found = filter_tasks_by_priority(tasks, priority)
-        #     if not found:
-        #         print(f"\nЗадач с приоритетом {priority} не найдено\n")
-        #         continue
-        #     show_tasks(found)
+        if (choice) == 8:
+            value = input("\nВведите приоритет для поиска задач(low, middle, high): \n").strip().lower()
+
+            if value not in ("low", "middle", "high"):
+                print("\nНекорректный приоритет\n")
+                continue
+
+            found = tracker.filter_tasks(priority=value)
+            if not found:
+                print(f"\nЗадач с приоритетом {value} не найдено\n")
+                continue
+            tracker.show_tasks(found)
         #
         # if choice == 9:
         #     task_id = read_int("\nВведите id для переименования: ")
