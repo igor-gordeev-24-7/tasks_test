@@ -31,20 +31,13 @@ class TaskTracker:
             priority=d.get("priority", "low"),
         )
 
-    def save(self) -> None:
-        data = [
-            {
-                "id": t.id,
-                "title": t.title,
-                "add_date": t.add_date.isoformat(),
-                "deadline": t.deadline.isoformat() if t.deadline else None,
-                "is_completed": t.is_completed,
-                "priority": t.priority,
-            }
-            for t in self.tasks
-        ]
-        with self.path.open("w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
+    def save_to_file(self) -> None:
+        data = [t.to_dict() for t in self.tasks]
+        try:
+            with self.path.open("w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+        except OSError as e:
+            print(f"Не удалось сохранить файл {self.path}: {e}")
 
     def add_task(self, task: Task) -> None:
         if self.find_task(task.id) is not None:
