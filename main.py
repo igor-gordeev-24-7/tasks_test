@@ -188,16 +188,16 @@ def show_menu():
             print(f"Задача #{new_id} добавлена")
 
 
-        # if choice == 3:
-        #     task_id = read_int("Введите id для поиска: ")
-        #
-        #     task = find_task(tasks, task_id)
-        #
-        #     if not task:
-        #         print("\nЗадача не найдена\n")
-        #         continue
-        #
-        #     show_task(task)
+        if choice == 3:
+            task_id = read_int("Введите id для поиска: ")
+
+            task = tracker.find_task(task_id)
+
+            if not task:
+                print("\nЗадача не найдена\n")
+                continue
+
+            task.show_info()
         #
         # if (choice) == 4:
         #     task_id = read_int("Введите id задачи для выполнения: ")
