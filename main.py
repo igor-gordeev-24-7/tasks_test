@@ -80,45 +80,45 @@ def read_int(prompt: str) -> int:
         except ValueError:
             print("\nНекорректный ввод: нужно целое число\n")
 #
-# def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
-#     len_of_tasks = len(tasks)
-#     len_completed_of_tasks = len(filter_tasks_by_status(tasks, True))
-#     len_not_completed_of_tasks = len(filter_tasks_by_status(tasks, False))
-#     len_low_priority_tasks = len(filter_tasks_by_priority(tasks, "low"))
-#     len_medium_priority_tasks = len(filter_tasks_by_priority(tasks, "medium"))
-#     len_high_priority_tasks = len(filter_tasks_by_priority(tasks, "high"))
-#
-#     percentage_of_completed_tasks = (
-#         len_completed_of_tasks / len_of_tasks * 100
-#         if len_of_tasks > 0
-#         else 0.0
-#     )
-#
-#     task_statistics = {
-#         "total": len_of_tasks,
-#         "completed": len_completed_of_tasks,
-#         "not_completed": len_not_completed_of_tasks,
-#         "low_priority": len_low_priority_tasks,
-#         "medium_priority": len_medium_priority_tasks,
-#         "high_priority": len_high_priority_tasks,
-#         "percentage_completed": percentage_of_completed_tasks,
-#     }
-#     return task_statistics
-#
-#
-# def show_statistics(stats: dict) -> None:
-#     print()
-#     print("Статистика Task Tracker")
-#     print(f"Всего задач: {stats['total']}")
-#     print(f"Выполнено: {stats['completed']}")
-#     print(f"Осталось: {stats['not_completed']}")
-#     print(f"Прогресс: {stats['percentage_completed']:.1f}%")
-#     print()
-#     print("Приоритеты:")
-#     print(f"low: {stats['low_priority']}")
-#     print(f"medium: {stats['medium_priority']}")
-#     print(f"high: {stats['high_priority']}")
-#     print()
+def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
+    len_of_tasks = len(tasks)
+    len_completed_of_tasks = len(tracker.filter_tasks(completed=True))
+    len_not_completed_of_tasks = len(tracker.filter_tasks(completed=False))
+    len_low_priority_tasks = len(tracker.filter_tasks(priority="low"))
+    len_medium_priority_tasks = len(tracker.filter_tasks(priority="medium"))
+    len_high_priority_tasks = len(tracker.filter_tasks(priority="high"))
+
+    percentage_of_completed_tasks = (
+        len_completed_of_tasks / len_of_tasks * 100
+        if len_of_tasks > 0
+        else 0.0
+    )
+
+    task_statistics = {
+        "total": len_of_tasks,
+        "completed": len_completed_of_tasks,
+        "not_completed": len_not_completed_of_tasks,
+        "low_priority": len_low_priority_tasks,
+        "medium_priority": len_medium_priority_tasks,
+        "high_priority": len_high_priority_tasks,
+        "percentage_completed": percentage_of_completed_tasks,
+    }
+    return task_statistics
+
+
+def show_statistics(stats: dict) -> None:
+    print()
+    print("Статистика Task Tracker")
+    print(f"Всего задач: {stats['total']}")
+    print(f"Выполнено: {stats['completed']}")
+    print(f"Осталось: {stats['not_completed']}")
+    print(f"Прогресс: {stats['percentage_completed']:.1f}%")
+    print()
+    print("Приоритеты:")
+    print(f"low: {stats['low_priority']}")
+    print(f"medium: {stats['medium_priority']}")
+    print(f"high: {stats['high_priority']}")
+    print()
 #
 # def delete_completed_tasks(tasks: list[Task]) -> int:
 #     completed = [task for task in tasks if task['completed']]
@@ -289,9 +289,9 @@ def show_menu():
             tracker.save_to_file()
             print("\nПриоритет изменен")
             print(f"Задача - {task.title} - приоритет {task.priority}\n")
-        #
-        # if choice == 11:
-        #     show_statistics(get_task_statistics(tasks))
+
+        if choice == 11:
+            show_statistics(get_task_statistics(tracker.tasks))
         #
         # if choice == 12:
         #     print()
