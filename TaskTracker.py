@@ -1,4 +1,5 @@
 import json
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -8,8 +9,18 @@ from helpers import get_new_id
 class TaskTracker:
     def __init__(self, path: str = "tasks.json"):
         self.path = Path(path)
+        self.backup_path = self.path.with_suffix(self.path.suffix + ".bak")
         self.tasks: list[Task] = []
         self.load_from_file()
+
+    def _backup(self) -> None:
+        """Копирует текущий файл в .bak перед перезаписью."""
+        if not self.path.exists():
+            return
+        try:
+            shutil.copy2(self.path, self.backup_path)
+        except OSError as e:
+            print(f"Не удалось создать резервную копию {self.backup_path}: {e}")
 
 
     def load_from_file(self) -> None:
@@ -52,6 +63,7 @@ class TaskTracker:
             print(f"Загружено задач: {len(self.tasks)}.")
 
     def save_to_file(self) -> None:
+        self._backup()
         data = [t.to_dict() for t in self.tasks]
         try:
             with self.path.open("w", encoding="utf-8") as f:
