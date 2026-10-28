@@ -43,7 +43,7 @@ class TaskTracker:
         if self.find_task(task.id) is not None:
             raise ValueError(f"Задача с id {task.id} уже существует")
         self.tasks.append(task)
-        self.save()
+        self.save_to_file()
 
     def find_task(self, task_id: int) -> Task | None:
         for task in self.tasks:
@@ -56,13 +56,13 @@ class TaskTracker:
         if task is None:
             return False
         task.is_completed = True
-        self.save()
+        self.save_to_file()
         return task
 
     def delete_task(self, task_id: int) -> None:
         task = self.find_task(task_id)
         self.tasks.remove(task)
-        self.save()
+        self.save_to_file()
 
     def filter_tasks(
             self,
