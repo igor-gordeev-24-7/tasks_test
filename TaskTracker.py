@@ -58,6 +58,17 @@ class TaskTracker:
                 return task
         return None
 
+    def complete_task(self, task_id : int):
+        task = self.find_task(task_id)
+        if task is None:
+            return False
+        task.is_completed = True
+        self.save()
+        return task
+
+
+
+
 
 
 
