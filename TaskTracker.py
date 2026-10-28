@@ -17,6 +17,31 @@ class TaskTracker:
             data = json.load(f)
         return [self._task_from_dict(item) for item in data]
 
+    def load_from_file(self) -> None:
+        self.tasks = []
+
+        if not self.path.exists():
+            print(f"Файл {self.path} не найден — начинаем с пустого списка.")
+            return
+
+        try:
+            with self.path.open("r", encoding="utf-8") as f:
+                raw = json.load(f)
+        except json.JSONDecodeError as e:
+            print(f"Файл {self.path} повреждён (неверный JSON): {e}")
+            print("Работаем с пустым списком, файл не изменён.")
+            return
+        except OSError as e:
+            print(f"Не удалось прочитать файл {self.path}: {e}")
+            return
+
+        if not isinstance(raw, list):
+            print(f"Ожидался список задач в {self.path}, получено: {type(raw).__name__}")
+            return
+
+        if not raw:
+            print(f"Файл {self.path} пуст.")
+            return
 
     def save_to_file(self) -> None:
         data = [t.to_dict() for t in self.tasks]
