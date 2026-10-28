@@ -115,6 +115,16 @@ class TaskTracker:
             return []
         return [task for task in self.tasks if needle in task.title.lower()]
 
+    def rename_task(self, task_id: int, new_title: str) -> Task | None:
+        task = self.find_task(task_id)
+        if task is None:
+            return None
+        new_title = new_title.strip()
+        if not new_title:
+            raise ValueError("Название не может быть пустым")
+        task.title = new_title
+        self.save_to_file()
+        return task
 
 
 
