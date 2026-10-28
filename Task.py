@@ -141,6 +141,17 @@ class Task:
             priority=priority,
         )
 
+    def to_dict(self) -> dict:
+        """Возвращает словарь, безопасный для json.dump()."""
+        return {
+            "id": self.id,
+            "title": self.title,
+            "add_date": self.add_date.isoformat(),  # date → "2026-10-27"
+            "deadline": self.deadline.isoformat() if self.deadline else None,  # None → null
+            "is_completed": self.is_completed,  # bool остаётся bool
+            "priority": self.priority,
+        }
+
 
 
 
