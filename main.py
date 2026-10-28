@@ -223,22 +223,22 @@ def show_menu():
             text = input("\nВведите часть названия задачи: ")
             result = tracker.search_tasks_by_text(text)
             tracker.show_tasks(result)
-        #
-        # if (choice) == 7:
-        #     print("\n1 - Показать выполненные")
-        #     print("2 - Показать невыполненные\n")
-        #
-        #     choice = read_int("Выберите пункт: ")
-        #
-        #     if choice not in (1,2):
-        #         print("\nНекорректный пункт\n")
-        #
-        #     if choice == 1:
-        #         show_tasks(filter_tasks_by_status(tasks, completed=True))
-        #
-        #     if choice == 2:
-        #         show_tasks(filter_tasks_by_status(tasks, completed=False))
-        #
+
+        if (choice) == 7:
+            print("\n1 - Показать выполненные")
+            print("2 - Показать невыполненные\n")
+
+            choice = read_int("Выберите пункт: ")
+
+            if choice not in (1,2):
+                print("\nНекорректный пункт\n")
+
+            if choice == 1:
+                 tracker.show_tasks(tracker.filter_tasks(completed=True))
+
+            if choice == 2:
+                tracker.show_tasks(tracker.filter_tasks(completed=False))
+
         # if (choice) == 8:
         #     priority = input("\nВведите приоритет для поиска задач(low, medium, high): \n").strip().lower()
         #
