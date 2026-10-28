@@ -140,7 +140,7 @@ def show_menu():
         if (choice) == 1:
             print("")
             if len(tasks) > 0:
-                show_tasks(tasks)
+                tracker.show_tasks()
             else:
                 print("Список пуст")
             print("")
