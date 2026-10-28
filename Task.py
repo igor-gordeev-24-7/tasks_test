@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from data import save_tasks
 
@@ -84,3 +84,63 @@ class Task:
     @staticmethod
     def is_valid_id(task_id: int) -> bool:
         return isinstance(task_id, int) and not isinstance(task_id, bool) and task_id > 0
+
+    @classmethod
+    def from_dict(cls, d: dict) -> Task:
+        deadline = (
+            datetime.strptime(d.get("deadline"), cls.DATE_FORMAT).date()
+            if d.get("deadline") else None
+        )
+        return cls(
+            id=d["id"],
+            title=d["title"],
+            add_date=datetime.strptime(d["add_date"], cls.DATE_FORMAT).date(),
+            deadline=deadline,
+            is_completed=d.get("is_completed", False),
+            priority=d.get("priority", "low"),
+        )
+
+    @classmethod
+    def from_string(cls, s: str) -> "Task":
+        """Создаёт Task из строки: id;title;priority;add_date;deadline;is_completed."""
+        parts = [p.strip() for p in s.split(";")]
+        if len(parts) != 6:
+            raise ValueError(
+                f"Ожидалось 6 полей через ';', получено {len(parts)}: {s!r}"
+            )
+
+        raw_id, title, priority, add_date_s, deadline_s, completed_s = parts
+
+        try:
+            task_id = int(raw_id)
+        except ValueError:
+            raise ValueError(f"id должен быть целым, получено: {raw_id!r}")
+
+        try:
+            add_date = datetime.strptime(add_date_s, cls.DATE_FORMAT).date()
+        except ValueError:
+            raise ValueError(f"add_date в формате {cls.DATE_FORMAT}, получено: {add_date_s!r}")
+
+        if deadline_s in (cls.NO_DEADLINE, ""):
+            deadline = None
+        else:
+            try:
+                deadline = datetime.strptime(deadline_s, cls.DATE_FORMAT).date()
+            except ValueError:
+                raise ValueError(
+                    f"deadline в формате {cls.DATE_FORMAT} или '{cls.NO_DEADLINE}', получено: {deadline_s!r}")
+
+        is_completed = completed_s.lower() in ("1", "true", "yes", "да")
+
+        return cls(
+            id=task_id,
+            title=title,
+            add_date=add_date,
+            deadline=deadline,
+            is_completed=is_completed,
+            priority=priority,
+        )
+
+
+
+
