@@ -208,17 +208,17 @@ def show_menu():
 
             tracker.complete_task(task_id)
             task.show_info()
-        #
-        # if (choice) == 5:
-        #     task_id = read_int("Введите id задачи для удаления: ")
-        #     task = find_task(tasks, task_id)
-        #     if not task:
-        #         print("\nЗадача для удаления не найдена\n")
-        #         continue
-        #
-        #     delete_task(tasks, task_id)
-        #     print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
-        #
+
+        if (choice) == 5:
+            task_id = read_int("Введите id задачи для удаления: ")
+            task = tracker.find_task(task_id)
+            if not task:
+                print("\nЗадача для удаления не найдена\n")
+                continue
+
+            tracker.delete_task(task_id)
+            print(f"\nЗадача - {task.title} - id - {task.id} - удалена\n")
+
         # if (choice) == 6:
         #     text = input("\nВведите часть названия задачи: ")
         #     result = search_tasks(tasks, text)
