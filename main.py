@@ -292,15 +292,15 @@ def show_menu():
 
         if choice == 11:
             show_statistics(get_task_statistics(tracker.tasks))
-        #
-        # if choice == 12:
-        #     print()
-        #     count = delete_completed_tasks(tasks)
-        #     if count == 0:
-        #         print("Выполненных задач нет")
-        #     else:
-        #         print(f"Удалено выполненных задач: {count}")
-        #     print()
+
+        if choice == 12:
+            print()
+            count = tracker.delete_completed_tasks()
+            if count == 0:
+                print("Выполненных задач нет")
+            else:
+                print(f"Удалено выполненных задач: {count}")
+            print()
         #
         # if choice == 13:
         #     print('Отсортированный список задач по приоритету:')

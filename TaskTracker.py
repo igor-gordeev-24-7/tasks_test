@@ -126,6 +126,14 @@ class TaskTracker:
         self.save_to_file()
         return task
 
+    def delete_completed_tasks(self) -> int:
+        to_delete = [t for t in self.tasks if t.is_completed]
+        if not to_delete:
+            return 0
+        for task in to_delete:
+            self.tasks.remove(task)
+        self.save_to_file()
+        return len(to_delete)
 
 
 
