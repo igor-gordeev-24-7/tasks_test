@@ -251,22 +251,26 @@ def show_menu():
                 print(f"\nЗадач с приоритетом {value} не найдено\n")
                 continue
             tracker.show_tasks(found)
-        #
-        # if choice == 9:
-        #     task_id = read_int("\nВведите id для переименования: ")
-        #     task = find_task(tasks, task_id)
-        #
-        #     if not task:
-        #         print("\nЗадача с таким id отсутствует\n")
-        #         continue
-        #
-        #     new_title = input("\nВведите новое название: \n").strip()
-        #     if not new_title:
-        #         print("\nНазвание не может быть пустым\n")
-        #         continue
-        #
-        #     result = rename_task(tasks, task_id, new_title)
-        #     print(f"\nЗадача переименована: {result['title']}\n")
+
+        if choice == 9:
+            task_id = read_int("\nВведите id для переименования: ")
+            new_title = input("\nВведите новое название: \n").strip()
+
+            if not new_title:
+                print("\nНазвание не может быть пустым\n")
+                continue
+
+            try:
+                task = tracker.rename_task(task_id, new_title)
+            except ValueError as e:
+                print(f"\nОшибка: {e}\n")
+                continue
+
+            if task is None:
+                print("\nЗадача с таким id отсутствует\n")
+                continue
+
+            print(f"\nЗадача переименована: {task.title}\n")
         #
         # if choice == 10:
         #     task_id = read_int("\nВведите id для смены приоритета: ")
