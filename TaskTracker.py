@@ -8,14 +8,9 @@ from helpers import get_new_id
 class TaskTracker:
     def __init__(self, path: str = "tasks.json"):
         self.path = Path(path)
-        self.tasks: list[Task] = self._load()
+        self.tasks: list[Task] = []
+        self.load_from_file()
 
-    def _load(self) -> list[Task]:
-        if not self.path.exists():
-            return []
-        with self.path.open("r", encoding="utf-8") as f:
-            data = json.load(f)
-        return [self._task_from_dict(item) for item in data]
 
     def load_from_file(self) -> None:
         self.tasks = []
