@@ -145,124 +145,26 @@ def show_menu():
                 print("Список пуст")
             print("")
 
-        if (choice) == 2:
-            titile = input("Введите title нового обращения: ")
-            print("")
-            add_task(tasks, titile, "medium")
-            print("")
-
-        if choice == 3:
-            task_id = read_int("Введите id для поиска: ")
-
-            task = find_task(tasks, task_id)
-
-            if not task:
-                print("\nЗадача не найдена\n")
+        if choice == 2:
+            title = input("Введите title нового обращения: ").strip()
+            if not title:
+                print("Название не может быть пустым")
                 continue
 
-            show_task(task)
+            new_id = get_new_id(tracker.tasks)
+            add_date = date.today()
 
-        if (choice) == 4:
-            task_id = read_int("Введите id задачи для выполнения: ")
-            task = find_task(tasks, task_id)
-            if not task:
-                print("\nЗадача не найдена\n")
-                continue
-
-            complete_task(tasks, task_id)
-            show_task(task)
-
-        if (choice) == 5:
-            task_id = read_int("Введите id задачи для удаления: ")
-            task = find_task(tasks, task_id)
-            if not task:
-                print("\nЗадача для удаления не найдена\n")
-                continue
-
-            delete_task(tasks, task_id)
-            print(f"\nЗадача - {task['title']} - id - {task['id']} - удалена\n")
-
-        if (choice) == 6:
-            text = input("\nВведите часть названия задачи: ")
-            result = search_tasks(tasks, text)
-            show_tasks(result)
-
-        if (choice) == 7:
-            print("\n1 - Показать выполненные")
-            print("2 - Показать невыполненные\n")
-
-            choice = read_int("Выберите пункт: ")
-
-            if choice not in (1,2):
-                print("\nНекорректный пункт\n")
-
-            if choice == 1:
-                show_tasks(filter_tasks_by_status(tasks, completed=True))
-
-            if choice == 2:
-                show_tasks(filter_tasks_by_status(tasks, completed=False))
-
-        if (choice) == 8:
-            priority = input("\nВведите приоритет для поиска задач(low, medium, high): \n").strip().lower()
-
-            if priority not in ("low", "medium", "high"):
-                print("\nНекорректный приоритет\n")
-                continue
-
-            found = filter_tasks_by_priority(tasks, priority)
-            if not found:
-                print(f"\nЗадач с приоритетом {priority} не найдено\n")
-                continue
-            show_tasks(found)
-
-        if choice == 9:
-            task_id = read_int("\nВведите id для переименования: ")
-            task = find_task(tasks, task_id)
-
-            if not task:
-                print("\nЗадача с таким id отсутствует\n")
-                continue
-
-            new_title = input("\nВведите новое название: \n").strip()
-            if not new_title:
-                print("\nНазвание не может быть пустым\n")
-                continue
-
-            result = rename_task(tasks, task_id, new_title)
-            print(f"\nЗадача переименована: {result['title']}\n")
-
-        if choice == 10:
-            task_id = read_int("\nВведите id для смены приоритета: ")
-            task = find_task(tasks, task_id)
-
-            if not task:
-                print("\nЗадача с таким id отсутствует\n")
-                continue
-
-            new_priority = input("\nВведите приоритет(low, medium, high): ").strip()
-            if new_priority not in ("low", "medium", "high"):
-                print("\nНекорректный приоритет\n")
-                continue
-
-            task["priority"] = new_priority
-            print("\nПриоритет изменен")
-            print(f"Задача - {task['title']} - приоритет {task['priority']}\n")
-
-        if choice == 11:
-            show_statistics(get_task_statistics(tasks))
-
-        if choice == 12:
-            print()
-            count = delete_completed_tasks(tasks)
-            if count == 0:
-                print("Выполненных задач нет")
+            deadline_raw = input("Дедлайн (ГГГГ-ММ-ДД, Enter — без дедлайна): ").strip()
+            if deadline_raw:
+                try:
+                    deadline = datetime.strptime(deadline_raw, "%Y-%m-%d").date()
+                except ValueError:
+                    print("Неверный формат даты, задача не добавлена")
+                    continue
             else:
-                print(f"Удалено выполненных задач: {count}")
-            print()
+                deadline = None
 
-        if choice == 13:
-            print('Отсортированный список задач по приоритету:')
-            show_tasks(sort_tasks_by_priority(tasks))
+            priority = input("Приоритет (low/middle/high) [low]: ").strip().lower() or "low"
 
         if choice == 0:
             print("")
