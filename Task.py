@@ -49,7 +49,7 @@ class Task:
 
     def complete(self, tasks: list[Task], task_id: int) -> bool:
         task = self.find_task(tasks, task_id)
-        task['is_completed'] = True
+        task.is_completed = True
         save_tasks(tasks)
 
     def is_overdue(self) -> bool:
