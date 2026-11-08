@@ -43,7 +43,7 @@ class Task:
 
     def find_task(self, tasks: list[Task], task_id: int) -> Task | None:
         for task in tasks:
-            if task["id"] == task_id:
+            if task.id == task_id:
                 return task
         return None
 
