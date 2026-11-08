@@ -7,7 +7,6 @@ from data import load_tasks, save_tasks
 from menu_text import MENU_TEXT
 from Task import Task
 
-tasks = load_tasks()
 
 tracker = TaskTracker("tasks.json")
 
@@ -67,7 +66,7 @@ def show_menu():
 
         if (choice) == 1:
             print("")
-            if len(tasks) > 0:
+            if len(tracker.tasks) > 0:
                 tracker.show_tasks()
             else:
                 print("Список пуст")
