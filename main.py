@@ -58,24 +58,7 @@ def show_statistics(stats: dict) -> None:
     print(f"medium: {stats['medium_priority']}")
     print(f"high: {stats['high_priority']}")
     print()
-#
-# def delete_completed_tasks(tasks: list[Task]) -> int:
-#     completed = [task for task in tasks if task['completed']]
-#     if not completed:
-#         return 0
-#     tasks[:] = [task for task in tasks if not task['completed']]
-#     return len(completed)
-#
-# PRIORITY_WEIGHT = {
-#     "high": 0,
-#     "medium": 1,
-#     "low": 2,
-# }
-#
-# def sort_tasks_by_priority(tasks: list[Task]) -> list[Task]:
-#     return sorted(tasks, key=lambda task: PRIORITY_WEIGHT[task['priority']])
-#
-#
+
 def show_menu():
     stop = False
     while not stop:
