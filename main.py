@@ -10,68 +10,7 @@ from Task import Task
 tasks = load_tasks()
 
 tracker = TaskTracker("tasks.json")
-#
-# def show_task(task: Task):
-#     print(f"\n{task['id']} - {task['title']} - {task['completed']} - {task['priority']}\n")
-#
-#
-# def show_tasks(tasks: list[Task]) -> None:
-#     if len(tasks) == 0:
-#         print("\nСписок задач пуст\n")
-#         return
-#     print("\nСписок задач:")
-#     for task in tasks:
-#         print(f"{task['id']} - {task['title']} - {task['completed']} - {task['priority']}")
-#     print()
-#
-# def add_task(tasks: list[Task], title: str, priority: str = "low") -> Task:
-#     task = {
-#         "id": get_new_id(tasks),
-#         "title": title,
-#         "completed": False,
-#         "priority": priority,
-#     }
-#     tasks.append(task)
-#     save_tasks(tasks)
-#     return task
-#
-# def find_task(tasks: list[Task], task_id : int) -> Task | None:
-#     for task in tasks:
-#         if task["id"] == task_id:
-#             return task
-#     return None
-#
-# def complete_task(tasks: list[Task], id : int):
-#     task = find_task(tasks, id)
-#     task['completed'] = True
-#     save_tasks(tasks)
-#     return task
-#
-# def delete_task(tasks: list[Task], task_id: int) -> None:
-#     task = find_task(tasks, task_id)
-#     tasks.remove(task)
-#     save_tasks(tasks)
-#
-# def search_tasks(tasks: list[Task], text: str) -> list[Task]:
-#     return [task for task in tasks if text.strip().lower() in task['title'].lower()]
-#
-# def filter_tasks_by_status(tasks: list[Task], completed: bool) -> list[Task]:
-#     return [task for task in tasks if task['completed'] == completed]
-#
-# def filter_tasks_by_priority(tasks: list[Task], priority: str) -> list[Task]:
-#     priority = priority.strip().lower()
-#     return [task for task in tasks if task['priority'].lower().strip() == priority]
-#
-# def rename_task(tasks: list[Task], id: int, new_title: str) -> Task:
-#     task = find_task(tasks, id)
-#     task['title'] = new_title
-#     save_tasks(tasks)
-#     return task
-#
-# def get_task_statistics(tasks: list[Task], id: int, priority: str) -> Task:
-#     task = find_task(tasks, id)
-#     task['priority'] = priority.strip().lower()
-#
+
 def read_int(prompt: str) -> int:
     while True:
         raw = input(prompt).strip()
