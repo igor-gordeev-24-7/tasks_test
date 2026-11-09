@@ -23,7 +23,7 @@ def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
     len_completed_of_tasks = len(tracker.filter_tasks(completed=True))
     len_not_completed_of_tasks = len(tracker.filter_tasks(completed=False))
     len_low_priority_tasks = len(tracker.filter_tasks(priority="low"))
-    len_medium_priority_tasks = len(tracker.filter_tasks(priority="middle"))
+    len_middle_priority_tasks = len(tracker.filter_tasks(priority="middle"))
     len_high_priority_tasks = len(tracker.filter_tasks(priority="high"))
 
     percentage_of_completed_tasks = (
@@ -37,7 +37,7 @@ def get_task_statistics(tasks: list[Task]) -> dict[str, int | float]:
         "completed": len_completed_of_tasks,
         "not_completed": len_not_completed_of_tasks,
         "low_priority": len_low_priority_tasks,
-        "medium_priority": len_medium_priority_tasks,
+        "middle_priority": len_middle_priority_tasks,
         "high_priority": len_high_priority_tasks,
         "percentage_completed": percentage_of_completed_tasks,
     }
@@ -54,7 +54,7 @@ def show_statistics(stats: dict) -> None:
     print()
     print("Приоритеты:")
     print(f"low: {stats['low_priority']}")
-    print(f"middle: {stats['medium_priority']}")
+    print(f"middle: {stats['middle_priority']}")
     print(f"high: {stats['high_priority']}")
     print()
 
