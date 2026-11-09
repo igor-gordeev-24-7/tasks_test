@@ -1,20 +1,26 @@
 [
-    {
-        "id": 1,
-        "title": "Изучить JSON",
-        "completed": false,
-        "priority": "high"
-    },
-    {
-        "id": 2,
-        "title": "Повторить функции",
-        "completed": true,
-        "priority": "medium"
-    },
-    {
-        "id": 3,
-        "title": "Написть программу",
-        "completed": true,
-        "priority": "low"
-    }
+  {
+    "id": 1,
+    "title": "Купить хлеб",
+    "add_date": "2026-10-27",
+    "deadline": "2026-10-28",
+    "is_completed": false,
+    "priority": "high"
+  },
+  {
+    "id": 2,
+    "title": "Позвонить маме",
+    "add_date": "2026-10-27",
+    "deadline": null,
+    "is_completed": false,
+    "priority": "middle"
+  },
+  {
+    "id": 3,
+    "title": "Прочитать книгу",
+    "add_date": "2026-10-20",
+    "deadline": "2026-11-30",
+    "is_completed": true,
+    "priority": "low"
+  }
 ]
