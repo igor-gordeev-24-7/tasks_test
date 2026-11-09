@@ -19,18 +19,88 @@ class Task:
         priority: str = "low",
 
     ):
-        if priority not in self.ALLOWED_PRIORITIES:
-            raise ValueError(
-                f"priority должен быть одним из {self.ALLOWED_PRIORITIES}, получено: {priority!r}"
-            )
-        self.id = id
+        self.__id = id
+
+        self._title = None
+        self._priority = None
+        self._deadline = None
+        self._is_completed = None
+        self._add_date = add_date
+
         self.title = title
-        self.add_date = add_date
+        self.priority = priority
         self.deadline = deadline
         self.is_completed = is_completed
-        self.priority = priority
 
         Task.created_count += 1
+
+    @property
+    def id(self) -> int:
+        return self.__id
+
+    @property
+    def title(self) -> str:
+        return self._title
+
+    @title.setter
+    def title(self, value: str):
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError("title не может быть пустым или строкой из пробелов")
+        self._title = value
+
+    @property
+    def priority(self) -> str:
+        return self._priority
+
+    @priority.setter
+    def priority(self, value: str):
+        if not isinstance(value, str) or not value.strip():
+            raise ValueError("priority не может быть пустым или строкой из пробелов")
+        if value not in self.ALLOWED_PRIORITIES:
+            raise ValueError("priority должен быть: low, middle, high")
+        self._priority = value
+
+    @property
+    def deadline(self) -> date | None:
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value: date | None):
+        if value is None or value == self.NO_DEADLINE:
+            self._deadline = None
+            return
+
+        if isinstance(value, str):
+            try:
+                value = datetime.strptime(value, self.DATE_FORMAT).date()
+            except ValueError as exc:
+                raise ValueError(
+                    f"deadline должен быть датой в формате {self.DATE_FORMAT} "
+                    f"или None, получено: {value!r}"
+                ) from exc
+
+        if not isinstance(value, date):
+            raise ValueError(
+                f"deadline должен быть date или None, получено: {type(value).__name__}"
+            )
+
+        self._deadline = value
+
+    @property
+    def is_completed(self) -> bool:
+        return self._is_completed
+
+    @is_completed.setter
+    def is_completed(self, value: bool):
+        if not isinstance(value, bool):
+            raise ValueError("is_completed должен быть bool")
+        self._is_completed = value
+
+    @property
+    def add_date(self) -> date:
+        return self._add_date
+
+
 
     def __str__(self) -> str:
         status = "выполнена" if self.is_completed else "не выполнена"
