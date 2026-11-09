@@ -109,6 +109,14 @@ class Task:
             return False
         return date.today() > self._deadline
 
+    @property
+    def status_text(self) -> str:
+        if self._is_completed:
+            return "выполнена"
+        if self.is_overdue:
+            return "просрочена"
+        return "активна"
+
 
 
     def __str__(self) -> str:
