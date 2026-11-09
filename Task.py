@@ -6,6 +6,7 @@ from data import save_tasks
 class Task:
     ALLOWED_PRIORITIES = ("low", "middle", "high")
     DATE_FORMAT = "%Y-%m-%d"
+    NO_DEADLINE = "none"
     created_count = 0
 
     def __init__(
@@ -100,6 +101,7 @@ class Task:
             priority=d.get("priority", "low"),
         )
 
+    # Не используется
     @classmethod
     def from_string(cls, s: str) -> "Task":
         """Создаёт Task из строки: id;title;priority;add_date;deadline;is_completed."""
