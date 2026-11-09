@@ -101,6 +101,15 @@ class Task:
         return self._add_date
 
 
+    @property
+    def is_overdue(self) -> bool:
+        if self._is_completed:
+            return False
+        if self._deadline is None:
+            return False
+        return date.today() > self._deadline
+
+
 
     def __str__(self) -> str:
         status = "выполнена" if self.is_completed else "не выполнена"
