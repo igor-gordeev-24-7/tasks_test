@@ -224,8 +224,14 @@ def show_menu():
             print()
 
         if choice == 13:
-            print("Отсортированный список задач по приоритету:")
-            tracker.show_tasks(tracker.sort_tasks_by_priority(reverse=True))
+            print('Отсортированный список задач по приоритету:')
+            show_tasks(sort_tasks_by_priority(tasks))
+
+        if choice == 0:
+            print("")
+            print("Программа остановлена")
+            print("")
+            stop = True
 
 
 def main() -> None:
