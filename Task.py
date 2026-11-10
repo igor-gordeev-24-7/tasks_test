@@ -104,9 +104,7 @@ class Task:
 
     @property
     def is_overdue(self) -> bool:
-        if self._is_completed:
-            return False
-        if self._deadline is None:
+        if self._is_completed or self._deadline is None:
             return False
         return date.today() > self._deadline
 
