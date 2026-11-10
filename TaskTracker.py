@@ -77,6 +77,10 @@ class TaskTracker:
             tmp_path.unlink(missing_ok=True)
 
     #  CRUD
+    def next_id(self) -> int:
+        """Следующий свободный id для новой задачи."""
+        return max((t.id for t in self.tasks), default=0) + 1
+
     def add_task(self, task: Task) -> None:
         if self.find_task(task.id) is not None:
             raise ValueError(f"Задача с id {task.id} уже существует")
