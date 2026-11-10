@@ -71,7 +71,7 @@ class TaskTracker:
         try:
             with tmp_path.open("w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
-            os.replace(tmp_path, self.path)   # атомарно заменяет старый файл
+            os.replace(tmp_path, self.path)
         except OSError as e:
             print(f"Не удалось сохранить файл {self.path}: {e}")
             tmp_path.unlink(missing_ok=True)
@@ -96,14 +96,14 @@ class TaskTracker:
     def complete_task(self, task_id: int) -> Task | None:
         task = self.find_task(task_id)
         if task is None:
-            return None                    # ✅ было False — несоответствие аннотации
+            return None
         task.is_completed = True
         self.save_to_file()
         return task
 
     def delete_task(self, task_id: int) -> bool:
         task = self.find_task(task_id)
-        if task is None:                   # ✅ было: remove(None) → ValueError
+        if task is None:
             return False
         self.tasks.remove(task)
         self.save_to_file()
@@ -116,7 +116,7 @@ class TaskTracker:
         new_title = new_title.strip()
         if not new_title:
             raise ValueError("Название не может быть пустым")
-        task.title = new_title             # вызовет сеттер Task.title (валидация)
+        task.title = new_title
         self.save_to_file()
         return task
 
@@ -142,7 +142,7 @@ class TaskTracker:
         if completed is not None:
             result = [t for t in result if t.is_completed == completed]
         if overdue is not None:
-            result = [t for t in result if t.is_overdue == overdue]   # ✅ без скобок
+            result = [t for t in result if t.is_overdue == overdue]
         return result
 
     def search_tasks_by_text(self, text: str) -> list[Task]:
@@ -166,7 +166,7 @@ class TaskTracker:
             print("Задач нет")
             return
         for task in tasks:
-            print(task.get_details())      # полиморфизм: PersonalTask/WorkTask добавят своё
+            print(task.get_details())
             print("-" * 40)
 
 
