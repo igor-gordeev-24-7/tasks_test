@@ -235,9 +235,9 @@ class Task:
             "type": self.TYPE,
             "id": self.id,
             "title": self.title,
-            "add_date": self.add_date.isoformat(),  # date → "2026-10-27"
+            "add_date": self.add_date.isoformat(),
             "deadline": self.deadline.isoformat() if self.deadline else None,  # None → null
-            "is_completed": self.is_completed,  # bool остаётся bool
+            "is_completed": self.is_completed,
             "priority": self.priority,
         }
 
