@@ -4,6 +4,7 @@ from Task import Task
 
 
 class WorkTask(Task):
+    TYPE = "work"
     def __init__(
             self,
             id: int,
