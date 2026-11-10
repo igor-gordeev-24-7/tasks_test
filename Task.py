@@ -232,6 +232,7 @@ class Task:
     def to_dict(self) -> dict:
         """Возвращает словарь, безопасный для json.dump()."""
         return {
+            "type": self.TYPE,
             "id": self.id,
             "title": self.title,
             "add_date": self.add_date.isoformat(),  # date → "2026-10-27"
