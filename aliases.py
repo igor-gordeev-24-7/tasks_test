@@ -1,1 +1,0 @@
-type Task = dict[str, int | str | bool]
