@@ -61,4 +61,6 @@ class WorkTask(Task):
     def get_details(self) -> str:
         return (
             f"{super().get_details()} | "
+            f"проект: {self.project or '—'} | "
+            f"ответственный: {self.assignee or '—'}"
         )
