@@ -3,7 +3,6 @@ from datetime import date, datetime
 from TaskTracker import TaskTracker
 from aliases import Task
 from helpers import get_new_id
-from data import load_tasks, save_tasks
 from menu_text import MENU_TEXT
 from Task import Task
 
@@ -117,8 +116,7 @@ def show_menu():
             if not task:
                 print("\nЗадача не найдена\n")
                 continue
-
-            task.show_info()
+            print(task)
 
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
@@ -128,7 +126,7 @@ def show_menu():
                 continue
 
             tracker.complete_task(task_id)
-            task.show_info()
+            print(task)
 
         if (choice) == 5:
             task_id = read_int("Введите id задачи для удаления: ")
