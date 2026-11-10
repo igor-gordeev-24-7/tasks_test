@@ -241,6 +241,18 @@ class Task:
             "priority": self.priority,
         }
 
+    def get_details(self) -> str:
+        status = "выполнена" if self.is_completed else "не выполнена"
+        deadline = self.deadline.isoformat() if self.deadline else "без срока"
+        overdue = " (просрочена)" if self.is_overdue else ""
+        return (
+            f"[{self.id}] {self.title} | "
+            f"приоритет: {self.priority} | "
+            f"добавлена: {self.add_date.isoformat()} | "
+            f"дедлайн: {deadline}{overdue} | "
+            f"статус: {status}"
+        )
+
 
 
 
