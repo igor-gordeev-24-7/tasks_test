@@ -3,6 +3,7 @@ from datetime import date, datetime
 
 
 class PersonalTask(Task):
+    TYPE = "personal"
     ALLOWED_CATEGORIES = ("здоровье", "покупки", "дом", "обучение", "другое")
     DEFAULT_CATEGORY = "другое"
 
