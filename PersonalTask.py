@@ -46,3 +46,6 @@ class PersonalTask(Task):
     @property
     def status(self) -> str:
         return f"{super().status_text} [{self.priority}]"
+
+    def get_details(self) -> str:
+        return f"{super().get_details()} | категория: {self.category}"
