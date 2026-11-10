@@ -4,6 +4,7 @@ from data import save_tasks
 
 
 class Task:
+    TYPE = "task"
     ALLOWED_PRIORITIES = ("low", "middle", "high")
     DATE_FORMAT = "%Y-%m-%d"
     NO_DEADLINE = "none"
