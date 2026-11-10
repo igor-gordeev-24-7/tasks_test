@@ -75,7 +75,7 @@ def show_menu():
                 print("Название не может быть пустым")
                 continue
 
-            new_id = get_new_id(tracker.tasks)
+            new_id = tracker.next_id()
             add_date = date.today()
 
             deadline_raw = input("Дедлайн (ГГГГ-ММ-ДД, Enter — без дедлайна): ").strip()
