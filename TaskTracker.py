@@ -118,7 +118,7 @@ class TaskTracker:
             print("Задач нет")
             return
         for task in tasks:
-            task.show_info()
+            print(task.get_details())
             print("-" * 40)
 
     def search_tasks_by_text(self, text: str) -> list[Task]:
