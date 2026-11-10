@@ -5,7 +5,7 @@ from menu_text import MENU_TEXT
 from Task import Task
 
 
-tracker = TaskTracker("tasks.json")
+tracker = TaskTracker("data/tasks.json")
 
 def read_int(prompt: str) -> int:
     while True:
