@@ -4,6 +4,7 @@ import shutil
 from pathlib import Path
 
 from Task import Task
+from data.exporters import TaskExporter
 
 
 class TaskTracker:
@@ -168,6 +169,25 @@ class TaskTracker:
         for task in tasks:
             print(task.get_details())
             print("-" * 40)
+
+    #  Экспорт
+    def export(self, exporter: TaskExporter, folder: str = "exports") -> None:
+        """Экспортирует задачи через переданный объект-экспортёр.
+
+        Трекер не знает, JSON это или TXT. Он просто вызывает export().
+        """
+        # Создаём папку для экспорта, если её нет
+        out_dir = Path(folder)
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        # Формируем имя файла на основе расширения экспортёра
+        # (Трекер не знает, какой это формат, он просто берет extension)
+        filename = f"report.{exporter.extension}"
+        path = out_dir / filename
+
+        # Полиморфный вызов: Python сам подставит нужный export()
+        exporter.export(self.tasks, path)
+        print(f"Экспортировано в {path}")
 
 
 
