@@ -1,6 +1,7 @@
 from datetime import date, datetime
 
 from TaskTracker import TaskTracker
+from data.exporters import JsonTaskExporter, TextTaskExporter
 from menu_text import MENU_TEXT
 from Task import Task
 
@@ -222,6 +223,29 @@ def show_menu():
         if choice == 13:
             print("Отсортированный список задач по приоритету:")
             tracker.show_tasks(tracker.sort_tasks_by_priority(reverse=True))
+
+        if choice == 14:
+            print("\n--- ЭКСПОРТ ЗАДАЧ ---")
+            print("Создаём список экспортёров...")
+
+            # 1. Создаём список объектов.
+            # Мы не проверяем их тип, они просто лежат в списке.
+            exporters = [
+                JsonTaskExporter(),
+                TextTaskExporter(),
+            ]
+
+            # 2. ОДИН И ТОТ ЖЕ КОД для всех экспортёров
+            for exporter in exporters:
+                try:
+                    # Полиморфный вызов.
+                    # TaskTracker не знает, какой формат сейчас в exporter.
+                    tracker.export(exporter)
+                except Exception as e:
+                    print(f"Ошибка экспорта через {type(exporter).__name__}: {e}")
+
+            print("\nГотово! Проверьте папку 'exports'.")
+            print("")
 
 
         if choice == 0:
