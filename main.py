@@ -1,14 +1,12 @@
 from datetime import date, datetime
 
 from TaskTracker import TaskTracker
-from aliases import Task
-from helpers import get_new_id
-from data import load_tasks, save_tasks
+from data.exporters import JsonTaskExporter, TextTaskExporter
 from menu_text import MENU_TEXT
 from Task import Task
 
 
-tracker = TaskTracker("tasks.json")
+tracker = TaskTracker("data/tasks.json")
 
 def read_int(prompt: str) -> int:
     while True:
@@ -78,7 +76,7 @@ def show_menu():
                 print("Название не может быть пустым")
                 continue
 
-            new_id = get_new_id(tracker.tasks)
+            new_id = tracker.next_id()
             add_date = date.today()
 
             deadline_raw = input("Дедлайн (ГГГГ-ММ-ДД, Enter — без дедлайна): ").strip()
@@ -117,8 +115,7 @@ def show_menu():
             if not task:
                 print("\nЗадача не найдена\n")
                 continue
-
-            task.show_info()
+            print(task)
 
         if (choice) == 4:
             task_id = read_int("Введите id задачи для выполнения: ")
@@ -128,7 +125,7 @@ def show_menu():
                 continue
 
             tracker.complete_task(task_id)
-            task.show_info()
+            print(task)
 
         if (choice) == 5:
             task_id = read_int("Введите id задачи для удаления: ")
@@ -226,6 +223,29 @@ def show_menu():
         if choice == 13:
             print("Отсортированный список задач по приоритету:")
             tracker.show_tasks(tracker.sort_tasks_by_priority(reverse=True))
+
+        if choice == 14:
+            print("\n--- ЭКСПОРТ ЗАДАЧ ---")
+            print("Создаём список экспортёров...")
+
+            # 1. Создаём список объектов.
+            # Мы не проверяем их тип, они просто лежат в списке.
+            exporters = [
+                JsonTaskExporter(),
+                TextTaskExporter(),
+            ]
+
+            # 2. ОДИН И ТОТ ЖЕ КОД для всех экспортёров
+            for exporter in exporters:
+                try:
+                    # Полиморфный вызов.
+                    # TaskTracker не знает, какой формат сейчас в exporter.
+                    tracker.export(exporter)
+                except Exception as e:
+                    print(f"Ошибка экспорта через {type(exporter).__name__}: {e}")
+
+            print("\nГотово! Проверьте папку 'exports'.")
+            print("")
 
 
         if choice == 0:

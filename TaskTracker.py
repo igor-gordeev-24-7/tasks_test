@@ -1,18 +1,21 @@
 import json
+import os
 import shutil
-from datetime import datetime
 from pathlib import Path
 
 from Task import Task
-from helpers import get_new_id
+from data.exporters import TaskExporter
+
 
 class TaskTracker:
+
     def __init__(self, path: str = "tasks.json"):
         self.path = Path(path)
         self.backup_path = self.path.with_suffix(self.path.suffix + ".bak")
         self.tasks: list[Task] = []
         self.load_from_file()
 
+    #  Файл: загрузка / сохранение
     def _backup(self) -> None:
         """Копирует текущий файл в .bak перед перезаписью."""
         if not self.path.exists():
@@ -21,7 +24,6 @@ class TaskTracker:
             shutil.copy2(self.path, self.backup_path)
         except OSError as e:
             print(f"Не удалось создать резервную копию {self.backup_path}: {e}")
-
 
     def load_from_file(self) -> None:
         self.tasks = []
@@ -63,13 +65,22 @@ class TaskTracker:
             print(f"Загружено задач: {len(self.tasks)}.")
 
     def save_to_file(self) -> None:
+        """Атомарная запись: сначала во временный файл, потом replace."""
         self._backup()
         data = [t.to_dict() for t in self.tasks]
+        tmp_path = self.path.with_suffix(self.path.suffix + ".tmp")
         try:
-            with self.path.open("w", encoding="utf-8") as f:
+            with tmp_path.open("w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+            os.replace(tmp_path, self.path)
         except OSError as e:
             print(f"Не удалось сохранить файл {self.path}: {e}")
+            tmp_path.unlink(missing_ok=True)
+
+    #  CRUD
+    def next_id(self) -> int:
+        """Следующий свободный id для новой задачи."""
+        return max((t.id for t in self.tasks), default=0) + 1
 
     def add_task(self, task: Task) -> None:
         if self.find_task(task.id) is not None:
@@ -83,49 +94,21 @@ class TaskTracker:
                 return task
         return None
 
-    def complete_task(self, task_id : int) -> Task | None:
+    def complete_task(self, task_id: int) -> Task | None:
         task = self.find_task(task_id)
         if task is None:
-            return False
+            return None
         task.is_completed = True
         self.save_to_file()
         return task
 
-    def delete_task(self, task_id: int) -> None:
+    def delete_task(self, task_id: int) -> bool:
         task = self.find_task(task_id)
+        if task is None:
+            return False
         self.tasks.remove(task)
         self.save_to_file()
-
-    def filter_tasks(
-            self,
-            *,
-            priority: str | None = None,
-            completed: bool | None = None,
-            overdue: bool | None = None,
-    ) -> list[Task]:
-        result = self.tasks
-        if priority is not None:
-            result = [t for t in result if t.priority == priority]
-        if completed is not None:
-            result = [t for t in result if t.is_completed == completed]
-        if overdue is not None:
-            result = [t for t in result if t.is_overdue() == overdue]
-        return result
-
-    def show_tasks(self, tasks: list[Task] | None = None) -> None:
-        tasks = self.tasks if tasks is None else tasks
-        if not tasks:
-            print("Задач нет")
-            return
-        for task in tasks:
-            task.show_info()
-            print("-" * 40)
-
-    def search_tasks_by_text(self, text: str) -> list[Task]:
-        needle = text.strip().lower()
-        if not needle:
-            return []
-        return [task for task in self.tasks if needle in task.title.lower()]
+        return True
 
     def rename_task(self, task_id: int, new_title: str) -> Task | None:
         task = self.find_task(task_id)
@@ -139,20 +122,72 @@ class TaskTracker:
         return task
 
     def delete_completed_tasks(self) -> int:
-        to_delete = [t for t in self.tasks if t.is_completed]
-        if not to_delete:
-            return 0
-        for task in to_delete:
-            self.tasks.remove(task)
-        self.save_to_file()
-        return len(to_delete)
+        before = len(self.tasks)
+        self.tasks = [t for t in self.tasks if not t.is_completed]
+        removed = before - len(self.tasks)
+        if removed:
+            self.save_to_file()
+        return removed
+
+    #  Фильтры и поиск
+    def filter_tasks(
+        self,
+        *,
+        priority: str | None = None,
+        completed: bool | None = None,
+        overdue: bool | None = None,
+    ) -> list[Task]:
+        result = self.tasks
+        if priority is not None:
+            result = [t for t in result if t.priority == priority]
+        if completed is not None:
+            result = [t for t in result if t.is_completed == completed]
+        if overdue is not None:
+            result = [t for t in result if t.is_overdue == overdue]
+        return result
+
+    def search_tasks_by_text(self, text: str) -> list[Task]:
+        needle = text.strip().lower()
+        if not needle:
+            return []
+        return [task for task in self.tasks if needle in task.title.lower()]
 
     def sort_tasks_by_priority(self, reverse: bool = False) -> list[Task]:
         order = {"low": 0, "middle": 1, "high": 2}
-        return sorted(self.tasks, key=lambda t: order.get(t.priority, -1), reverse=reverse)
+        return sorted(
+            self.tasks,
+            key=lambda t: order.get(t.priority, -1),
+            reverse=reverse,
+        )
 
+    #  Вывод
+    def show_tasks(self, tasks: list[Task] | None = None) -> None:
+        tasks = self.tasks if tasks is None else tasks
+        if not tasks:
+            print("Задач нет")
+            return
+        for task in tasks:
+            print(task.get_details())
+            print("-" * 40)
 
+    #  Экспорт
+    def export(self, exporter: TaskExporter, folder: str = "exports") -> None:
+        """Экспортирует задачи через переданный объект-экспортёр.
 
+        Трекер не знает, JSON это или TXT. Он просто вызывает export().
+        """
+        # Создаём папку для экспорта, если её нет
+        out_dir = Path(folder)
+        out_dir.mkdir(parents=True, exist_ok=True)
+
+        # Формируем имя файла на основе расширения экспортёра
+        # (Трекер не знает, какой это формат, он просто берет extension)
+        filename = f"report.{exporter.extension}"
+        path = out_dir / filename
+
+        # Полиморфный вызов: Python сам подставит нужный export()
+        exporter.export(self.tasks, path)
+        print(f"Экспортировано в {path}")
 
 
 
